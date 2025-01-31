@@ -1,12 +1,40 @@
-import { useState } from "react";
+import Navbar from "./components/Navbar";
 import "./App.css";
+import Carousel from "./components/Carousel";
+import { Route, Routes } from "react-router-dom";
+import PizzaCardContainer from "./components/PizzaCardContainer";
+import SignInScreen from "./screens/SignInScreen";
+import Footer from "./components/Footer";
+import SignUpScreen from "./screens/SignUpScreen";
+import CartScreen from "./screens/CartScreen";
+import PizzaDetailsScreen from "./screens/PizzaDetailsScreen";
+import MenuScreen from "./screens/MenuScreen";
+import CheckoutScreen from "./screens/CheckoutScreen";
+import UserProfileScreen from "./screens/UserProfileScreen";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <h1 class="text-center text-3xl">welcome to pizza haven</h1>
+      <Navbar />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Carousel />
+              <PizzaCardContainer />
+            </>
+          }
+        />
+        <Route path="/user" element={<UserProfileScreen />} />
+        <Route path="/cart" element={<CartScreen />} />
+        <Route path="/pizzadetails" element={<PizzaDetailsScreen />} />
+        <Route path="/menu" element={<MenuScreen />} />
+        <Route path="/checkout" element={<CheckoutScreen />} />
+        <Route path="/signin" element={<SignInScreen />} />
+        <Route path="/signup" element={<SignUpScreen />} />
+      </Routes>
+      <Footer />
     </>
   );
 }
