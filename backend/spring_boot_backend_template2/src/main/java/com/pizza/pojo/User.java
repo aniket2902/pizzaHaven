@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pizza.domain.USER_ROLE;
-import com.pizza.dto.OutletDto;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
