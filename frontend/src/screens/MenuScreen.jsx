@@ -56,6 +56,10 @@ const MenuScreen = () => {
     },
   ];
 
+  const filteredPizzas = selectedFilter
+    ? pizzas.filter((pizza) => pizza.category === selectedFilter)
+    : pizzas;
+
   return (
     <div className="bg-gray-50 min-h-screen pt-20 pb-10">
       {/* Header Section */}
