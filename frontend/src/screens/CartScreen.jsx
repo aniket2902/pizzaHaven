@@ -59,7 +59,7 @@ const CartScreen = () => {
                         {item.name}
                       </p>
                       <p className="text-gray-600">
-                        Price: ${item.price.toFixed(2)}
+                        Price: ₹{item.price.toFixed(2)}
                       </p>
                     </div>
                   </div>
@@ -75,7 +75,7 @@ const CartScreen = () => {
 
             <div className="mt-8 flex justify-between items-center">
               <p className="text-xl font-bold text-gray-800">
-                Total: ${calculateTotal().toFixed(2)}
+                Total: ₹{calculateTotal().toFixed(2)}
               </p>
               <div>
                 <Link

@@ -11,7 +11,7 @@ const PizzaCard = ({ image, name, description, price }) => {
       </div>
 
       <div className="flex justify-between items-center px-5 pb-5">
-        <span className="text-red-500 font-bold text-lg">${price}</span>
+        <span className="text-red-500 font-bold text-lg">₹{price}</span>
         <button className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-full transition">
           Order Now
         </button>

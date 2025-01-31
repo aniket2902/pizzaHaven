@@ -9,14 +9,14 @@ const MenuScreen = () => {
       name: "Margherita",
       category: "Classic",
       description: "Tomato sauce, mozzarella, and basil.",
-      price: "$10",
+      price: "₹10",
     },
     {
       id: 2,
       name: "Pepperoni",
       category: "Classic",
       description: "Tomato sauce, mozzarella, and pepperoni.",
-      price: "$12",
+      price: "₹12",
     },
     {
       id: 3,
@@ -24,35 +24,35 @@ const MenuScreen = () => {
       category: "Veggie",
       description:
         "Tomato sauce, mozzarella, mushrooms, bell peppers, and onions.",
-      price: "$11",
+      price: "₹11",
     },
     {
       id: 4,
       name: "Meat Feast",
       category: "Meat Lovers",
       description: "Tomato sauce, mozzarella, pepperoni, sausage, and bacon.",
-      price: "$14",
+      price: "₹14",
     },
     {
       id: 5,
       name: "Spicy Inferno",
       category: "Spicy",
       description: "Tomato sauce, mozzarella, jalapeños, and spicy sausage.",
-      price: "$13",
+      price: "₹13",
     },
     {
       id: 6,
       name: "BBQ Chicken",
       category: "Specialty",
       description: "BBQ sauce, mozzarella, chicken, and onions.",
-      price: "$15",
+      price: "₹15",
     },
     {
       id: 7,
       name: "Chocolate Dessert Pizza",
       category: "Dessert",
       description: "Chocolate sauce, marshmallows, and strawberries.",
-      price: "$9",
+      price: "₹9",
     },
   ];
 

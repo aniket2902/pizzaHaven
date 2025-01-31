@@ -114,7 +114,7 @@ const UserProfileScreen = () => {
                       <div key={index} className="flex justify-between">
                         <span className="text-gray-600">{item.name}</span>
                         <span className="text-gray-600">
-                          {item.quantity} x ${item.price.toFixed(2)}
+                          {item.quantity} x ₹{item.price.toFixed(2)}
                         </span>
                       </div>
                     ))}
@@ -122,7 +122,7 @@ const UserProfileScreen = () => {
 
                   <div className="flex justify-between mt-4">
                     <p className="font-semibold text-gray-800">
-                      Total: ${calculateOrderTotal(order.items).toFixed(2)}
+                      Total: ₹{calculateOrderTotal(order.items).toFixed(2)}
                     </p>
                     <button className="text-red-500 hover:text-red-600">
                       Reorder

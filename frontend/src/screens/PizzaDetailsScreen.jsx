@@ -48,7 +48,7 @@ const PizzaDetailsScreen = () => {
 
             <div className="flex justify-between items-center">
               <p className="text-2xl font-bold text-gray-800">
-                ${pizza.price.toFixed(2)}
+                ₹{pizza.price.toFixed(2)}
               </p>
               <Link
                 to="/cart"

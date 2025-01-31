@@ -52,13 +52,13 @@ const CheckoutScreen = () => {
                       {item.name}
                     </p>
                     <p className="text-gray-600">
-                      Price: ${item.price.toFixed(2)}
+                      Price: ₹{item.price.toFixed(2)}
                     </p>
                     <p className="text-gray-600">Qty: {item.quantity}</p>
                   </div>
                 </div>
                 <div className="text-gray-600 font-medium">
-                  ${(item.price * item.quantity).toFixed(2)}
+                  ₹{(item.price * item.quantity).toFixed(2)}
                 </div>
               </div>
             ))}
@@ -129,7 +129,7 @@ const CheckoutScreen = () => {
         {/* Order Summary */}
         <div className="mt-8 flex justify-between items-center">
           <p className="text-xl font-bold text-gray-800">
-            Total: ${calculateTotal().toFixed(2)}
+            Total: ₹{calculateTotal().toFixed(2)}
           </p>
           <div>
             <Link
