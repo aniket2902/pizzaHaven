@@ -1,8 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const PizzaCard = ({ image, name, description, price }) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/pizzadetails");
+  };
+
   return (
-    <div className="max-w-sm bg-white shadow-lg rounded-2xl overflow-hidden">
+    <div
+      className="max-w-sm bg-white shadow-lg rounded-2xl overflow-hidden"
+      onClick={handleClick}
+    >
       <img className="w-full h-52 object-cover" src={image} alt={name} />
 
       <div className="p-5">

@@ -6,17 +6,17 @@ const PizzaCardContainer = () => {
   const pizzas = [
     {
       image: pizza,
-      name: "Pepperoni Pizza",
-      description:
-        "A delicious pepperoni pizza with a crispy crust and melted cheese.",
-      price: "12.99",
-    },
-    {
-      image: pizza,
       name: "Margherita Pizza",
       description:
         "A classic margherita pizza with fresh mozzarella, tomatoes, and basil.",
       price: "10.99",
+    },
+    {
+      image: pizza,
+      name: "Pepperoni Pizza",
+      description:
+        "A delicious pepperoni pizza with a crispy crust and melted cheese.",
+      price: "12.99",
     },
   ];
 

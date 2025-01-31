@@ -11,6 +11,7 @@ import PizzaDetailsScreen from "./screens/PizzaDetailsScreen";
 import MenuScreen from "./screens/MenuScreen";
 import CheckoutScreen from "./screens/CheckoutScreen";
 import UserProfileScreen from "./screens/UserProfileScreen";
+import OrderConfirmationScreen from "./screens/OrderConfirmationScreen";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/pizzadetails" element={<PizzaDetailsScreen />} />
         <Route path="/menu" element={<MenuScreen />} />
         <Route path="/checkout" element={<CheckoutScreen />} />
+        <Route path="/confirmation" element={<OrderConfirmationScreen />} />
         <Route path="/signin" element={<SignInScreen />} />
         <Route path="/signup" element={<SignUpScreen />} />
       </Routes>
