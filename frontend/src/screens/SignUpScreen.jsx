@@ -24,12 +24,13 @@ const SignUpScreen = () => {
             <input
               type="email"
               id="email"
+              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50"
-              required
+              className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-red-500"
             />
           </div>
+
           <div>
             <label
               htmlFor="password"
@@ -40,38 +41,42 @@ const SignUpScreen = () => {
             <input
               type="password"
               id="password"
+              placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50"
-              required
+              className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-red-500"
             />
           </div>
+
           <div>
             <label
-              htmlFor="confirmPassword"
+              htmlFor="confirm-password"
               className="block text-gray-600 font-medium"
             >
               Confirm Password
             </label>
             <input
               type="password"
-              id="confirmPassword"
+              id="confirm-password"
+              placeholder="Confirm your password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50"
-              required
+              className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-red-500"
             />
           </div>
+
           <button
             type="submit"
-            className="w-full bg-red-500 text-white px-4 py-2 rounded-full font-medium hover:bg-red-600 transition"
+            className="w-full bg-red-500 text-white py-2 rounded-full font-medium hover:bg-red-600 transition"
           >
             Sign Up
           </button>
         </form>
-        <div className="mt-4 text-center">
+
+        <div className="mt-4 text-center text-gray-600">
+          <span>Already have an account? </span>
           <Link to="/signin" className="text-red-500 hover:underline">
-            Already have an account? Sign In
+            Sign In
           </Link>
         </div>
       </div>

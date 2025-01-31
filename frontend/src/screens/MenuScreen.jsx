@@ -57,31 +57,76 @@ const MenuScreen = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-6 pt-24">
-      <div className="container mx-auto bg-white shadow-lg rounded-lg p-8">
-        <h2 className="text-3xl font-bold text-center text-red-500 mb-6">
-          Menu
-        </h2>
+    <div className="bg-gray-50 min-h-screen pt-20 pb-10">
+      {/* Header Section */}
+      <div className="container mx-auto px-6 py-8">
+        <h1 className="text-4xl font-bold text-gray-800 mb-4">
+          Explore Our Pizza Menu
+        </h1>
+        <p className="text-gray-600 mb-8">
+          Choose from a wide variety of delicious pizzas crafted with the finest
+          ingredients. Whether you're a fan of classic flavors or adventurous
+          combinations, we have something for everyone.
+        </p>
+      </div>
 
-        <div className="space-y-6">
-          {pizzas.map((pizza) => (
-            <div
-              key={pizza.id}
-              className="flex items-center justify-between py-4 border-b border-gray-300"
-            >
-              <div className="flex items-center space-x-4">
-                <div>
-                  <p className="text-lg font-medium text-gray-800">
+      {/* Main Content */}
+      <div className="container mx-auto px-6 flex flex-col md:flex-row gap-8">
+        {/* Filter Section */}
+        <div className="w-full md:w-1/4 bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">
+            Filter by Category
+          </h2>
+          <ul className="space-y-2">
+            {[
+              "All",
+              "Classic",
+              "Veggie",
+              "Meat Lovers",
+              "Spicy",
+              "Specialty",
+              "Dessert",
+            ].map((category) => (
+              <li
+                key={category}
+                className={`cursor-pointer p-2 rounded-lg ${
+                  selectedFilter === category
+                    ? "bg-red-500 text-white"
+                    : "text-gray-600 hover:bg-gray-100"
+                }`}
+                onClick={() =>
+                  setSelectedFilter(category === "All" ? null : category)
+                }
+              >
+                {category}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Menu Section */}
+        <div className="w-full md:w-3/4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredPizzas.map((pizza) => (
+              <div
+                key={pizza.id}
+                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+              >
+                <img
+                  src="https://via.placeholder.com/400x200"
+                  alt={pizza.name}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h2 className="text-2xl font-bold text-gray-800 mb-2">
                     {pizza.name}
-                  </p>
-                  <p className="text-gray-600">{pizza.description}</p>
+                  </h2>
+                  <p className="text-gray-600 mb-4">{pizza.description}</p>
+                  <p className="text-red-500 font-bold">{pizza.price}</p>
                 </div>
               </div>
-              <div className="flex items-center space-x-4">
-                <p className="text-gray-600">{pizza.price}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>

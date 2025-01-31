@@ -24,12 +24,13 @@ const SignInScreen = () => {
             <input
               type="email"
               id="email"
+              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50"
-              required
+              className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-red-500"
             />
           </div>
+
           <div>
             <label
               htmlFor="password"
@@ -40,22 +41,38 @@ const SignInScreen = () => {
             <input
               type="password"
               id="password"
+              placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50"
-              required
+              className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-red-500"
             />
           </div>
+
+          <div className="flex justify-between items-center">
+            <div className="flex items-center">
+              <input type="checkbox" className="mr-2" />
+              <span className="text-gray-600">Remember me</span>
+            </div>
+            <Link
+              to="/forgot-password"
+              className="text-red-500 hover:underline"
+            >
+              Forgot Password?
+            </Link>
+          </div>
+
           <button
             type="submit"
-            className="w-full bg-red-500 text-white px-4 py-2 rounded-full font-medium hover:bg-red-600 transition"
+            className="w-full bg-red-500 text-white py-2 rounded-full font-medium hover:bg-red-600 transition"
           >
             Sign In
           </button>
         </form>
-        <div className="mt-4 text-center">
+
+        <div className="mt-4 text-center text-gray-600">
+          <span>Don't have an account? </span>
           <Link to="/signup" className="text-red-500 hover:underline">
-            Don't have an account? Sign Up
+            Sign Up
           </Link>
         </div>
       </div>

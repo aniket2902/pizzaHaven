@@ -27,6 +27,7 @@ const CartScreen = () => {
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-6 pt-24">
       {" "}
+      {/* Added pt-24 */}
       <div className="container mx-auto bg-white shadow-lg rounded-lg p-8">
         <h2 className="text-3xl font-bold text-center text-red-500 mb-6">
           Your Cart
