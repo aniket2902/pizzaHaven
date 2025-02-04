@@ -10,8 +10,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+@Entity
 public class Outlet {
+    @Id
+    private Long id;
 	private String name;
     private String description;
     
@@ -25,7 +27,7 @@ public class Outlet {
     private String openingHours; 
     
     @JsonIgnore
-    @OneToMany(mappedBy="restaurant",cascade=CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy="outlet",cascade=CascadeType.ALL,orphanRemoval = true)
     
     private List<Order> orders=new ArrayList<>();
     
@@ -34,6 +36,6 @@ public class Outlet {
     private boolean open;
     
     @JsonIgnore
-    @OneToMany(mappedBy = "restaurant",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "outlet",cascade = CascadeType.ALL)
     private List<Food> foods=new ArrayList<>();
 }
