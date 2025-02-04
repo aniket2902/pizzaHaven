@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { signInUserThunk } from "../Redux/thunks/UserThunk";
+import { useDispatch } from "react-redux";
 
 const SignInScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const dispatch = useDispatch();
+
   const handleSubmit = (e) => {
+    dispatch(signInUserThunk({ email, password }));
     e.preventDefault();
-    // Handle form submission logic here
   };
 
   return (

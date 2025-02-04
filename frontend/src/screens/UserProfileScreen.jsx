@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const orders = [
   {
@@ -25,6 +26,12 @@ const UserProfileScreen = () => {
     email: "john.doe@example.com",
   });
 
+  const userDetails = {};
+
+  const data = useSelector((state) => state.userReducer.user);
+
+  useEffect(() => {}, []);
+
   return (
     <div className="min-h-screen bg-gray-100 py-12 pt-24 px-6">
       <div className="container mx-auto bg-white shadow-lg rounded-lg p-8 flex space-x-8">
@@ -43,8 +50,8 @@ const UserProfileScreen = () => {
               <input
                 type="text"
                 name="name"
-                value={userDetails.name}
-                onChange={handleChange}
+                value={userDetails?.name}
+                // onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-500"
               />
             </div>
@@ -57,7 +64,7 @@ const UserProfileScreen = () => {
               <input
                 type="email"
                 name="email"
-                value={userDetails.email}
+                value={userDetails?.email}
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-500"
               />
@@ -71,7 +78,7 @@ const UserProfileScreen = () => {
               <input
                 type="text"
                 name="address"
-                value={userDetails.address}
+                value={userDetails?.address}
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-500"
               />
