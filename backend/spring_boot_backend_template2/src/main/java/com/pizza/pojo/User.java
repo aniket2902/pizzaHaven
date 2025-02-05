@@ -24,6 +24,7 @@ public class User {
 	private String fullName;
 	private String email;
 	private String password;
+	private String phoneNumber;
 
 	private USER_ROLE role;
 
@@ -32,7 +33,7 @@ public class User {
 	private List<Order> orders;
 
 	@ElementCollection
-	private List<OutletDto> favorites=new ArrayList<>();
+	//private List<OutletDto> favorites=new ArrayList<>();
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Address> addresses = new ArrayList<>();
