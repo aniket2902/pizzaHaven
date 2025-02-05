@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.stereotype.Component;
 
 import com.pizza.security.CustomUserDetailsImpl;
 
@@ -20,6 +21,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 
+@Component
 public class JwtUtils {
 	
 	@Value("${spring.security.jwt.secret.key}") //example of value injected as dependency , using SpEL
