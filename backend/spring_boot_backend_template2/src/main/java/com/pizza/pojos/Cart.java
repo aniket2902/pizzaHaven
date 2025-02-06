@@ -1,14 +1,18 @@
 package com.pizza.pojos;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import java.util.List;
 
+@Data
 @Entity
-public class Cart extends BaseEntity{
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+@Table(name = "carts")
+public class Cart extends BaseEntity {
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "selected_item_id")
-    private ItemSize selectedItem;
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> cartItems;
 }
