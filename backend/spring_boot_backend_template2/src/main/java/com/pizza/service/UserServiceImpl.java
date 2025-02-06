@@ -37,4 +37,5 @@ public class UserServiceImpl implements UserService {
 		return new ApiResponse("User Registered with ID " + savedUser.getId());
 	}
 
+
 }
