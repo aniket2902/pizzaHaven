@@ -1,7 +1,7 @@
 package com.pizza.pojos;
 
 
-import com.pizza.pojo.User;
+import com.pizza.pojos.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -10,12 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "addresses")
-public class Address {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Address extends BaseEntity {
     private String street;
     private String city;
     private String state;
@@ -25,8 +20,5 @@ public class Address {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-    @Column(name = "created_at")
-    private final LocalDateTime createdAt = LocalDateTime.now();
 }
 
