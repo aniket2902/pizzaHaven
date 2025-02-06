@@ -11,11 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "payments")
-public class Payment {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Payment extends BaseEntity{
     private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
@@ -27,7 +23,4 @@ public class Payment {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
-
-    @Column(name = "created_at")
-    private final LocalDateTime createdAt = LocalDateTime.now();
 }

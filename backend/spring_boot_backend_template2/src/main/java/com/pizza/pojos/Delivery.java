@@ -9,11 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "delivery")
-public class Delivery {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Delivery extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -24,7 +20,4 @@ public class Delivery {
 
     @Enumerated(EnumType.STRING)
     private DELIVERY_STATUS deliveryStatus;
-
-    @Column(name = "created_at")
-    private final LocalDateTime createdAt = LocalDateTime.now();
 }

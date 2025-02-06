@@ -10,12 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "order_items")
-public class OrderItem {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class OrderItem extends BaseEntity{
     private int quantity;
     private Double price;
 
@@ -33,7 +28,4 @@ public class OrderItem {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
-
-    @Column(name = "created_at")
-    private final LocalDateTime createdAt = LocalDateTime.now();
 }

@@ -27,7 +27,7 @@ public class BaseEntity {
 
     @CreationTimestamp
     @Column(name="created_on")
-    private LocalDate createdOn;
+    private LocalDateTime createdOn = LocalDateTime.now();
 
     @UpdateTimestamp
     @Column(name="updated_on")
