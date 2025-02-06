@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pizza.dto.FullUserDTO;
-import com.pizza.pojo.User;
+import com.pizza.pojos.User;
 import com.pizza.repository.UserRepository;
 import com.pizza.response.ApiResponse;
 
-import custom_exceptions.ApiException;
+import com.pizza.exception.ApiException;
 
 @Service
 @Transactional

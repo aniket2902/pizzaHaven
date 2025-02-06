@@ -36,6 +36,9 @@ public class User extends BaseEntity {
     @NotBlank(message = "Phone number is required")
     private String phoneNumber;
 
+    @Column(name = "status")
+    private Boolean status;
+
     @Enumerated(EnumType.STRING)
     private USER_ROLE role;
 

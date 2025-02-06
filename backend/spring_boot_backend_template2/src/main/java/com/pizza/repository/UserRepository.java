@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.pizza.pojo.User;
+import com.pizza.pojos.User;
 
 
 public interface UserRepository extends JpaRepository<User, Long>{

@@ -26,7 +26,6 @@ public class FullUserDTO {
     @NotNull
 	private USER_ROLE role;
     private String status;
-//    private String gender;
-//    private String picture;
+
 }
 
