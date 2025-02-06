@@ -30,10 +30,7 @@ public class OrderController {
     @PostMapping("/create")
     public ResponseEntity<?> createOrder(@RequestHeader("Authorization") String jwt) {
         User user = userService.findUserProfileByJwt(jwt);
-
         Long id = user.getId();
-
-
         Order order = orderService.createOrder(id);
         return ResponseEntity.ok(order);
 
