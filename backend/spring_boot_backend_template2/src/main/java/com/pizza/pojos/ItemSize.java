@@ -14,7 +14,7 @@ public class ItemSize extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
-
+    @Enumerated(EnumType.STRING)
     private AVAILABLE_SIZES size;
     private BigDecimal price;
 }
