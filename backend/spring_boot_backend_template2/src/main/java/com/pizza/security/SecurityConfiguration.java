@@ -31,8 +31,8 @@ public class SecurityConfiguration {
                                 request.requestMatchers("/products/view",
                                                 "/users/signup", "/users/signin",
                                                 "/v*/api-doc*/**", "/swagger-ui/**",
-                                                "/api/auth/login/**",
-                                                "/api/auth/register/**").permitAll()
+                                                "/api/auth/signin",
+                                                "/api/auth/signup").permitAll()
                                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
 
                                         .requestMatchers("/products/purchase/**")
