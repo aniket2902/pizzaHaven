@@ -2,8 +2,11 @@ package com.pizza.pojos;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "carts")

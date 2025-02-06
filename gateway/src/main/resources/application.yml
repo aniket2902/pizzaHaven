@@ -50,7 +50,7 @@ spring:
         - id: backend
           uri: lb://backend
           predicates:
-            - Path= /api/auth/**
+            - Path= /auth/**
 #        - id: notification-service
 #          uri: lb://notification-service
 #          predicates:

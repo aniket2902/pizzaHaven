@@ -1,5 +1,8 @@
 package com.pizza.security;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,47 +15,58 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.server.ServerWebExchange;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private CustomJWTAuthenticationFilter customJWTAuthenticationFilter;
 
     @Bean
-    public SecurityFilterChain authorizeRequests(HttpSecurity http) throws Exception {
-        http.csrf(customizer -> customizer.disable())
-                .authorizeHttpRequests
-                        (request ->
-                                request.requestMatchers("/products/view",
-                                                "/users/signup", "/users/signin",
-                                                "/v*/api-doc*/**", "/swagger-ui/**",
-                                                "/api/auth/signin",
-                                                "/api/auth/signup").permitAll()
-                                        .requestMatchers(HttpMethod.OPTIONS).permitAll()
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-                                        .requestMatchers("/products/purchase/**")
-                                        .hasRole("CUSTOMER")
-                                        //  .requestMatchers("/products/add","/products/delete")
-                                        .requestMatchers("/api/admin/**")
-                                        .hasRole("ADMIN")
-                                        .anyRequest().authenticated())
-                .sessionManagement(session
-                        -> session.sessionCreationPolicy(
-                        SessionCreationPolicy.STATELESS));
-        http.addFilterBefore(customJWTAuthenticationFilter,
-                UsernamePasswordAuthenticationFilter.class);
+        http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(Authorize -> Authorize
+                		.requestMatchers("/api/admin/**").hasAnyRole("RESTAURANT_MANAGER","ADMIN")
+                                .requestMatchers("/api/**").authenticated()
+                                
+                                .anyRequest().permitAll()
+                )
+                .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()));
+               
+		return http.build();
+		
+	}
+    
+    // CORS Configuration
+    private CorsConfigurationSource corsConfigurationSource() {
+        return new CorsConfigurationSource() {
 
-        return http.build();
+			@Override
+			public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+				CorsConfiguration cfg = new CorsConfiguration();
+                cfg.setAllowedOrigins(Arrays.asList(
+                    "http://localhost:3000",
+                    "http://localhost:8080"
+                ));
+                cfg.setAllowedMethods(Collections.singletonList("*"));
+                cfg.setAllowCredentials(true);
+                cfg.setAllowedHeaders(Collections.singletonList("*"));
+                cfg.setExposedHeaders(Arrays.asList("Authorization"));
+                cfg.setMaxAge(3600L);
+                return cfg;
+			}
+		
+        };
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager
-            (AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
+    
 }
