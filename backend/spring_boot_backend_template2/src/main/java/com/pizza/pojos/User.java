@@ -2,6 +2,7 @@ package com.pizza.pojos;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pizza.domain.USER_ROLE;
 
 import jakarta.persistence.*;
@@ -43,6 +44,7 @@ public class User extends BaseEntity {
     private USER_ROLE role;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
     private Address address;
 
 }
