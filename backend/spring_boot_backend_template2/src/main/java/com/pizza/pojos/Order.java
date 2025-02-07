@@ -1,10 +1,7 @@
 package com.pizza.pojos;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,6 +9,7 @@ import java.util.List;
 @Data
 @Entity
 @Builder
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "orders")
 public class Order extends BaseEntity{
