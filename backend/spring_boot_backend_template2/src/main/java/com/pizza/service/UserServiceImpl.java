@@ -1,5 +1,7 @@
 package com.pizza.service;
 
+import com.pizza.security.JwtProvider;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,16 +17,14 @@ import com.pizza.exception.ApiException;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 	
-	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
-	private ModelMapper modelMapper;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+
+	private final UserRepository userRepository;
+	private final ModelMapper modelMapper;
+	private final PasswordEncoder passwordEncoder;
+	private final JwtProvider jwtProvider;
 
 	@Override
 	public ApiResponse registerNewUser(FullUserDTO dto) {
@@ -36,5 +36,12 @@ public class UserServiceImpl implements UserService {
 		User savedUser = userRepository.save(user);
 		return new ApiResponse("User Registered with ID " + savedUser.getId());
 	}
+
+	@Override
+	public User findUserProfileByJwt(String jwt) {
+		String email = jwtProvider.getEmailFromJwtToken(jwt);
+        return userRepository.findByEmail(email).orElseThrow(() -> new ApiException("User not found with email: " + email));
+	}
+
 
 }

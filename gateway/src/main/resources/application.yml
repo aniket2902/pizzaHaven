@@ -4,10 +4,10 @@ server:
 spring:
   application:
     name: gateway
-#  security:
-#    jwt:
-#      secret:
-#        key: a0fcbd306a451411520fb5e92f976a38fb5f587cde0b2b7894b9e120c84059baaad36ec8ec3d2bd5efc0aa021735ca631e04efdf0235b1b2a99ecfc44e87608f
+  #  security:
+  #    jwt:
+  #      secret:
+  #        key: a0fcbd306a451411520fb5e92f976a38fb5f587cde0b2b7894b9e120c84059baaad36ec8ec3d2bd5efc0aa021735ca631e04efdf0235b1b2a99ecfc44e87608f
   cloud:
     gateway:
       globalcors:
@@ -31,27 +31,27 @@ spring:
           predicates:
             - Path=/api/emails/**
 
-
-#        - id: user-service
-#          uri: lb://user-service
-#          predicates:
-#            - Path=/api/users/**, /api/roles/**, /api/addresses/**, /user-service/metrics
-#          filters:
-#            - name: AuthenticationFilter
-#              args:
-#                requiredRole: ROLE_USER
-#        - id: auth-service
-#          uri: lb://auth-service
-#          predicates:
-#            - Path=/api/auth/**, /auth-service/metrics
-#        - id: partner-service
-#          uri: lb://partner-service
-#          predicates:
-#            - Path=/api/partners/**, /api/categories/**, /api/services/**, /api/availabilities/**, /partner-service/metrics
+        #        - id: user-service
+        #          uri: lb://user-service
+        #          predicates:
+        #            - Path=/api/users/**, /api/roles/**, /api/addresses/**, /user-service/metrics
+        #          filters:
+        #            - name: AuthenticationFilter
+        #              args:
+        #                requiredRole: ROLE_USER
+        #        - id: auth-service
+        #          uri: lb://auth-service
+        #          predicates:
+        #            - Path=/api/auth/**, /auth-service/metrics
+        #        - id: partner-service
+        #          uri: lb://partner-service
+        #          predicates:
+        #            - Path=/api/partners/**, /api/categories/**, /api/services/**, /api/availabilities/**, /partner-service/metrics
         - id: backend
           uri: lb://backend
           predicates:
-            - Path= /auth/**,
+            - Path= /auth/**, /api/pizzas/**
+
 #        - id: notification-service
 #          uri: lb://notification-service
 #          predicates:
@@ -68,7 +68,6 @@ logging:
       springframework:
         cloud:
           gateway: TRACE
-
 #management:
 #  endpoints:
 #    web:
