@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { signInUserThunk } from "../Redux/thunks/UserThunk";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUserThunk } from "../Redux/thunks/AuthThunk";
 import { useDispatch } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
@@ -12,7 +12,6 @@ const initialValues = {
 };
 
 const validationSchema = Yup.object({
-  fullName: Yup.string().required("Full Name is required"),
   email: Yup.string()
     .email("Invalid email format")
     .required("Email is required"),
@@ -22,15 +21,12 @@ const validationSchema = Yup.object({
 });
 
 const SignInScreen = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    // dispatch(signInUserThunk({ email, password }));
-    // e.preventDefault();
-    console.log(e);
+  const handleSubmit = (values) => {
+    console.log(values);
+    dispatch(loginUserThunk({ data: values, navigate }));
   };
 
   return (

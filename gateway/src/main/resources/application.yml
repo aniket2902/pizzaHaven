@@ -13,7 +13,7 @@ spring:
       globalcors:
         corsConfigurations:
           '[/**]':
-            allowedOriginPatterns:
+            allowedOrigins:
              - 'http://localhost:5173'
 #              - 'https://urbanclamp.xyz'
             allowedMethods:
@@ -24,6 +24,7 @@ spring:
               - OPTIONS
             allowedHeaders: "*"
             allowCredentials: true
+
       routes:
         - id: email-service
           uri: lb://email-service

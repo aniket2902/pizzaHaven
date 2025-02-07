@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: null,
-  jwt: null,
+  jwt: localStorage.getItem("jwt") || null,
   isLoading: false,
   error: null,
   success: null,
@@ -26,14 +26,25 @@ const userSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    signInUser: (state, action) => {
-      state.user = action.payload;
-      state.isLoading = false;
+    loginRequest: (state) => {
+      state.isLoading = true;
+      state.error = null;
+      state.success = null;
     },
-    signInFailed: (state, action) => {
-      state.user = null;
+    loginSuccess: (state, action) => {
+      state.isLoading = false;
+      state.jwt = action.payload.jwt;
+      state.user = action.payload.user;
+      state.success = "Login Success";
+    },
+    loginFailure: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+    },
+    logout: (state) => {
+      state.jwt = null;
+      state.user = null;
+      localStorage.removeItem("jwt");
     },
   },
 });
@@ -42,8 +53,10 @@ export const {
   registerRequest,
   registerSuccess,
   registerFailed,
-  signInUser,
-  signInFailed,
+  loginRequest,
+  loginSuccess,
+  loginFailure,
+  logout
 } = userSlice.actions;
 
 export default userSlice.reducer;

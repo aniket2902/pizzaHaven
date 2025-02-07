@@ -3,8 +3,10 @@ import {
   registerRequest, 
   registerSuccess, 
   registerFailed, 
-  signInUser, 
-  signInFailed 
+  loginRequest,
+  loginSuccess,
+  loginFailure,
+  logout
 } from "../slices/UserSlice";
 
 
@@ -31,4 +33,32 @@ export const registerUserThunk = (reqData) => async (dispatch) => {
       dispatch(registerFailed(error.response?.data?.message || error.message));
     }
   };
+
+  export const loginUserThunk = (reqData) => async (dispatch) => {
+    try {
+      dispatch(loginRequest());
+  
+      const { data } = await axios.post(`${API_URL}/signin`, reqData.data);
+  
+      if (data.jwt) localStorage.setItem("jwt", data.jwt);
+  
+      if (data.role === "ROLE_RESTAURANT_OWNER") {
+        reqData.navigate("/admin/restaurant");
+      } else {
+        reqData.navigate("/");
+      }
+  
+      dispatch(loginSuccess({ jwt: data.jwt, user: data.user }));
+    } catch (error) {
+      dispatch(
+        loginFailure(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        )
+      );
+    }
+};
+
+
 
