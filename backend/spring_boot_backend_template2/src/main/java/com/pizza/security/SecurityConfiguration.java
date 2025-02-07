@@ -35,7 +35,6 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(Authorize -> Authorize
                 		.requestMatchers("/api/admin/**").hasAnyRole("RESTAURANT_MANAGER","ADMIN")
                                 .requestMatchers("/api/**").authenticated()
-                                
                                 .anyRequest().permitAll()
                 )
                 .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
@@ -54,8 +53,9 @@ public class SecurityConfiguration {
 			public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
 				CorsConfiguration cfg = new CorsConfiguration();
                 cfg.setAllowedOrigins(Arrays.asList(
-                    "http://localhost:3000",
-                    "http://localhost:8080"
+                    "http://localhost:5173"
+                   // "http://localhost:5173",
+                  //  "http://localhost:8080"
                 ));
                 cfg.setAllowedMethods(Collections.singletonList("*"));
                 cfg.setAllowCredentials(true);

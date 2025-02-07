@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import { Formik, Form, Field, ErrorMessage } from "formik";
+
+import { registerUserThunk } from "../Redux/thunks/AuthThunk";
 
 import * as Yup from "yup";
 
@@ -9,29 +14,38 @@ const initialValues = {
   name: "",
   email: "",
   password: "",
+  status: true,
+  phoneNumber: "1234567890",
   role: "ROLE_CUSTOMER",
 };
 
 const validationSchema = Yup.object({
-  fullName: Yup.string().required("Full Name is required"),
+  name: Yup.string().required(" Name is required"),
   email: Yup.string()
     .email("Invalid email format")
     .required("Email is required"),
   password: Yup.string()
-    .min(6, "Password must be at least 8 characters")
+    .min(8, "Password must be at least 8 characters")
     .required("Password is required"),
 });
 
 const SignUpScreen = () => {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [name, setName] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    console.log(e.target.value);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    e.preventDefault();
+  const handleSubmit = (values) => {
+    
+    values.status = true;
+    values.role = "ROLE_CUSTOMER";
+
+    console.log(values);
+
+    dispatch(registerUserThunk({ userData: values, navigate }));
   };
 
   return (
@@ -46,36 +60,62 @@ const SignUpScreen = () => {
           onSubmit={handleSubmit}
         >
           <Form>
-            <Field
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="Full Name"
-              name="name"
-              id="name"
-              autoComplete="name"
-              helperText={<ErrorMessage name="name" />}
-            />
-            <Field
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="Email Address"
-              name="email"
-              id="email"
-              autoComplete="email"
-              helperText={<ErrorMessage name="email" />}
-            />
-            <Field
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="Password"
-              name="password"
-              type="password"
-              id="password"
-              helperText={<ErrorMessage name="password" />}
-            />
+            <div className="mb-4">
+              <label htmlFor="name" className="block text-gray-600 font-medium">
+                Name
+              </label>
+              <Field
+                name="name"
+                id="name"
+                placeholder="Enter your name"
+                className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-red-500"
+              />
+              <ErrorMessage
+                name="name"
+                component="div"
+                className="text-red-500 text-sm mt-1"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="email"
+                className="block text-gray-600 font-medium"
+              >
+                Email Address
+              </label>
+              <Field
+                name="email"
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-red-500"
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="text-red-500 text-sm mt-1"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="password"
+                className="block text-gray-600 font-medium"
+              >
+                Password
+              </label>
+              <Field
+                name="password"
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-red-500"
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="text-red-500 text-sm mt-1"
+              />
+            </div>
             <button
               type="submit"
               className="w-full bg-red-500 text-white py-2 rounded-full font-medium hover:bg-red-600 transition"
@@ -84,83 +124,6 @@ const SignUpScreen = () => {
             </button>
           </Form>
         </Formik>
-        <div className="mt-4 text-center text-gray-600">
-          <span>Already have an account? </span>
-          <Link to="/signin" className="text-red-500 hover:underline">
-            Sign In
-          </Link>
-        </div>
-
-        {/* <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-gray-600 font-medium">
-              Name
-            </label>
-            <input
-              type="name"
-              id="name"
-              placeholder="Enter your Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-red-500"
-            />
-          </div>
-          <div>
-            <label htmlFor="email" className="block text-gray-600 font-medium">
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-red-500"
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-gray-600 font-medium"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-red-500"
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="confirm-password"
-              className="block text-gray-600 font-medium"
-            >
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              id="confirm-password"
-              placeholder="Confirm your password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-red-500"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-red-500 text-white py-2 rounded-full font-medium hover:bg-red-600 transition"
-          >
-            Sign Up
-          </button>
-        </form> */}
-
         <div className="mt-4 text-center text-gray-600">
           <span>Already have an account? </span>
           <Link to="/signin" className="text-red-500 hover:underline">

@@ -10,20 +10,20 @@ spring:
 #        key: a0fcbd306a451411520fb5e92f976a38fb5f587cde0b2b7894b9e120c84059baaad36ec8ec3d2bd5efc0aa021735ca631e04efdf0235b1b2a99ecfc44e87608f
   cloud:
     gateway:
-#      globalcors:
-#        corsConfigurations:
-#          '[/**]':
-#            allowedOrigins:
-#              - 'http://localhost:3000'
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOriginPatterns:
+             - 'http://localhost:5173'
 #              - 'https://urbanclamp.xyz'
-#            allowedMethods:
-#              - GET
-#              - POST
-#              - PUT
-#              - DELETE
-#              - OPTIONS
-#            allowedHeaders: "*"
-#            allowCredentials: true
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
       routes:
         - id: email-service
           uri: lb://email-service
@@ -50,7 +50,7 @@ spring:
         - id: backend
           uri: lb://backend
           predicates:
-            - Path= /auth/**
+            - Path= /auth/**,
 #        - id: notification-service
 #          uri: lb://notification-service
 #          predicates:

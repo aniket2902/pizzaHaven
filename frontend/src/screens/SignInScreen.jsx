@@ -2,6 +2,24 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { signInUserThunk } from "../Redux/thunks/UserThunk";
 import { useDispatch } from "react-redux";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+
+import * as Yup from "yup";
+
+const initialValues = {
+  email: "",
+  password: "",
+};
+
+const validationSchema = Yup.object({
+  fullName: Yup.string().required("Full Name is required"),
+  email: Yup.string()
+    .email("Invalid email format")
+    .required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 8 characters")
+    .required("Password is required"),
+});
 
 const SignInScreen = () => {
   const [email, setEmail] = useState("");
@@ -10,73 +28,80 @@ const SignInScreen = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
-    dispatch(signInUserThunk({ email, password }));
-    e.preventDefault();
+    // dispatch(signInUserThunk({ email, password }));
+    // e.preventDefault();
+    console.log(e);
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center py-12 px-6">
       <div className="bg-white shadow-lg rounded-lg p-8 w-full sm:w-96">
         <h2 className="text-3xl font-bold text-center text-red-500 mb-6">
-          Sign In
+          Sign Up
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-gray-600 font-medium">
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-red-500"
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-gray-600 font-medium"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-red-500"
-            />
-          </div>
-
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <input type="checkbox" className="mr-2" />
-              <span className="text-gray-600">Remember me</span>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          <Form>
+            <div className="mb-4">
+              <label
+                htmlFor="email"
+                className="block text-gray-600 font-medium"
+              >
+                Email Address
+              </label>
+              <Field
+                name="email"
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-red-500"
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="text-red-500 text-sm mt-1"
+              />
             </div>
-            <Link
-              to="/forgot-password"
-              className="text-red-500 hover:underline"
+            <div className="mb-4">
+              <label
+                htmlFor="password"
+                className="block text-gray-600 font-medium"
+              >
+                Password
+              </label>
+              <Field
+                name="password"
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-red-500"
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="text-red-500 text-sm mt-1"
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-red-500 text-white py-2 rounded-full font-medium hover:bg-red-600 transition"
             >
-              Forgot Password?
-            </Link>
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-red-500 text-white py-2 rounded-full font-medium hover:bg-red-600 transition"
-          >
-            Sign In
-          </button>
-        </form>
-
+              Sign In
+            </button>
+          </Form>
+        </Formik>
         <div className="mt-4 text-center text-gray-600">
           <span>Don't have an account? </span>
           <Link to="/signup" className="text-red-500 hover:underline">
             Sign Up
+          </Link>
+        </div>
+        <div className="flex justify-between items-start">
+          <Link to="/forgot-password" className="text-red-500 hover:underline">
+            Forgot Password?
           </Link>
         </div>
       </div>
