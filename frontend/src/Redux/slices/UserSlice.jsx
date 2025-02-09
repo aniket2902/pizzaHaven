@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: null,
+  shippingAddresses: [],
+  selectedAdress: null,
   jwt: localStorage.getItem("jwt") || null,
   isLoading: false,
   error: null,
@@ -46,6 +48,12 @@ const userSlice = createSlice({
       state.user = null;
       localStorage.removeItem("jwt");
     },
+    setAllUserAddresses: (state, action) => {
+      state.user.shippingAddresses = action.payload;
+    },
+    setShippingAddress: (state, action) => {
+      state.selectedAdress = action.payload;
+    },
   },
 });
 
@@ -56,7 +64,9 @@ export const {
   loginRequest,
   loginSuccess,
   loginFailure,
-  logout
+  logout,
+  setAllUserAddresses,
+  setShippingAddress,
 } = userSlice.actions;
 
 export default userSlice.reducer;

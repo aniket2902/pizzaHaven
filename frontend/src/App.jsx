@@ -12,24 +12,18 @@ import MenuScreen from "./screens/MenuScreen";
 import CheckoutScreen from "./screens/CheckoutScreen";
 import UserProfileScreen from "./screens/UserProfileScreen";
 import OrderConfirmationScreen from "./screens/OrderConfirmationScreen";
+import HomeScreen from "./screens/HomeScreen";
 
 function App() {
   return (
     <>
       <Navbar />
       <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <Carousel />
-              <PizzaCardContainer />
-            </>
-          }
-        />
+        <Route path="/" element={<HomeScreen />} />
         <Route path="/user" element={<UserProfileScreen />} />
         <Route path="/cart" element={<CartScreen />} />
         <Route path="/pizzadetails" element={<PizzaDetailsScreen />} />
+        <Route path="/pizzadetails/:id" element={<PizzaDetailsScreen />} />
         <Route path="/menu" element={<MenuScreen />} />
         <Route path="/checkout" element={<CheckoutScreen />} />
         <Route path="/confirmation" element={<OrderConfirmationScreen />} />

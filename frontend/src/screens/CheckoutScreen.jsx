@@ -1,143 +1,255 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { use } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { saveShippingAddressThunk } from "../Redux/thunks/UserThunk";
+// import { saveShippingAddress } from "../Redux/slices/UserSlice";
 
 const CheckoutScreen = () => {
-  const cartItems = [
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // const savedAddresses = useSelector(
+  //   (state) => state.userReducer.shippingAddressess || []
+  // );
+
+  const savedAddresses = [
     {
-      id: 1,
-      name: "Margherita Pizza",
-      quantity: 2,
-      price: 12.99,
-      image: "/images/margherita.jpg",
+      id: "1",
+      street: "address1",
+      city: "Bengaluru",
+      state: "Karnataka",
+      zip: "560001",
+      country: "India",
     },
     {
-      id: 2,
-      name: "Pepperoni Pizza",
-      quantity: 1,
-      price: 14.99,
-      image: "/images/pepperoni.jpg",
+      id: "2",
+      street: "address2",
+      city: "Bengaluru",
+      state: "Karnataka",
+      zip: "560001",
+      country: "India",
+    },
+    {
+      id: "3",
+      street: "address3",
+      city: "Bengaluru",
+      state: "Karnataka",
+      zip: "560001",
+      country: "India",
     },
   ];
 
-  const calculateTotal = () => {
-    return cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const cart = useSelector((state) => state.cartReducer);
+
+  const [useSavedAddress, setUseSavedAddress] = useState(
+    savedAddresses[0] ? true : false
+  );
+
+  const [address, setAddress] = useState({
+    street: "",
+    city: "",
+    state: "",
+    zip: "",
+    country: "",
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(saveShippingAddressThunk(address));
+    navigate("/checkout");
+  };
+
+  const handleSelectedAddress = (selectedAddress) => {
+    setUseSavedAddress(true);
+    setAddress(selectedAddress);
+  };
+
+  const handleNewAddress = () => {
+    setUseSavedAddress(false);
+    setAddress({
+      street: "",
+      city: "",
+      state: "",
+      zip: "",
+      country: "",
+    });
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12 pt-24 px-6">
-      <div className="container mx-auto bg-white shadow-lg rounded-lg p-8 max-w-7xl">
+    <div className="min-h-screen bg-gray-100 py-12 px-6 pt-24">
+      <div className="container mx-auto bg-white shadow-lg rounded-lg p-8">
         <h2 className="text-3xl font-bold text-center text-red-500 mb-6">
           Checkout
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Cart Items Section */}
-          <div className="space-y-6">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-4">
-              Your Order
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="md:col-span-2 grid grid-cols-2 gap-6 p-6 rounded-lg">
+            <h3 className="text-2xl font-semibold text-gray-800 col-span-2">
+              Select Address
             </h3>
-            {cartItems.map((item) => (
-              <div
-                key={item.id}
-                className="flex items-center justify-between py-4 border-b border-gray-300"
-              >
-                <div className="flex items-center space-x-4">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-20 h-20 object-cover rounded-md"
-                  />
-                  <div>
-                    <p className="text-lg font-medium text-gray-800">
-                      {item.name}
-                    </p>
-                    <p className="text-gray-600">
-                      Price: ₹{item.price.toFixed(2)}
-                    </p>
-                    <p className="text-gray-600">Qty: {item.quantity}</p>
-                  </div>
-                </div>
-                <div className="text-gray-600 font-medium">
-                  ₹{(item.price * item.quantity).toFixed(2)}
-                </div>
-              </div>
-            ))}
-          </div>
 
-          {/* Shipping and Payment Section */}
-          <div className="space-y-6">
-            {/* Shipping Details */}
-            <div>
-              <h3 className="text-2xl font-semibold text-gray-800 mb-4">
-                Shipping Details
-              </h3>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-gray-600 text-sm font-medium mb-1">
-                    Full Name
-                  </label>
+            {savedAddresses?.length > 0 ? (
+              savedAddresses.map((selectedAddress) => (
+                <div
+                  key={selectedAddress.id}
+                  className="p-4 rounded-lg bg-white shadow-sm"
+                >
+                  <p className="text-gray-800 font-medium">
+                    {selectedAddress.street}, {selectedAddress.city}
+                  </p>
+                  <p className="text-gray-600">
+                    {selectedAddress.state}, {selectedAddress.zip},{" "}
+                    {selectedAddress.country}
+                  </p>
+                  <button
+                    className="w-full py-2 mt-4 rounded-full font-medium bg-gray-200 text-gray-700 cursor-pointer hover:bg-gray-300"
+                    onClick={() => handleSelectedAddress(selectedAddress)}
+                  >
+                    Use this Address
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-600 text-center">
+                No saved addresses found. Please add a new address.
+              </p>
+            )}
+
+            {savedAddresses[0] && (
+              <div className=" p-4 rounded-lg bg-white shadow-sm">
+                <p className="text-gray-800 font-medium">Add New Address</p>
+                <p className="text-gray-600">
+                  Add a well-described address to help us deliver your order
+                  correctly.
+                </p>
+                <button
+                  className="w-full py-2 mt-4 rounded-full font-medium bg-red-500 text-white hover:bg-red-600 cursor-pointer"
+                  onClick={handleNewAddress}
+                >
+                  Add New
+                </button>
+              </div>
+            )}
+
+            {
+              <div className="col-span-2 bg-white p-6 rounded-lg shadow-md">
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                  Enter Address
+                </h3>
+                <form
+                  onSubmit={handleSubmit}
+                  className="grid grid-cols-2 gap-4"
+                >
                   <input
                     type="text"
-                    placeholder="John Doe"
-                    className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    placeholder="Street"
+                    className={`p-2 border border-gray-300 focus:border-0 outline-none rounded-md focus:ring focus:ring-red-300
+                      ${
+                        useSavedAddress ? "bg-gray-200 cursor-not-allowed" : ""
+                      }`}
+                    value={address.street}
+                    disabled={useSavedAddress}
+                    onChange={(e) =>
+                      setAddress({ ...address, street: e.target.value })
+                    }
                   />
-                </div>
-
-                <div>
-                  <label className="block text-gray-600 text-sm font-medium mb-1">
-                    Address
-                  </label>
                   <input
                     type="text"
-                    placeholder="1234 Main St, Apt 1"
-                    className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    placeholder="City"
+                    className={`p-2 border border-gray-300 focus:border-0 outline-none rounded-md focus:ring focus:ring-red-300
+                      ${
+                        useSavedAddress ? "bg-gray-200 cursor-not-allowed" : ""
+                      }`}
+                    value={address.city}
+                    disabled={useSavedAddress}
+                    onChange={(e) =>
+                      setAddress({ ...address, city: e.target.value })
+                    }
                   />
-                </div>
-
-                <div>
-                  <label className="block text-gray-600 text-sm font-medium mb-1">
-                    Phone Number
-                  </label>
                   <input
-                    type="tel"
-                    placeholder="(123) 456-7890"
-                    className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    type="text"
+                    placeholder="State"
+                    className={`p-2 border border-gray-300 focus:border-0 outline-none rounded-md focus:ring focus:ring-red-300
+                      ${
+                        useSavedAddress ? "bg-gray-200 cursor-not-allowed" : ""
+                      }`}
+                    value={address.state}
+                    disabled={useSavedAddress}
+                    onChange={(e) =>
+                      setAddress({ ...address, state: e.target.value })
+                    }
                   />
-                </div>
+                  <input
+                    type="text"
+                    placeholder="ZIP Code"
+                    className={`p-2 border border-gray-300 focus:border-0 outline-none rounded-md focus:ring focus:ring-red-300
+                      ${
+                        useSavedAddress ? "bg-gray-200 cursor-not-allowed" : ""
+                      }`}
+                    value={address.zip}
+                    disabled={useSavedAddress}
+                    onChange={(e) =>
+                      setAddress({ ...address, zip: e.target.value })
+                    }
+                  />
+                  <input
+                    type="text"
+                    placeholder="Country"
+                    className={`p-2 border border-gray-300 focus:border-0 outline-none rounded-md focus:ring focus:ring-red-300
+                      ${
+                        useSavedAddress ? "bg-gray-200 cursor-not-allowed" : ""
+                      }`}
+                    value={address.country}
+                    disabled={useSavedAddress}
+                    onChange={(e) =>
+                      setAddress({ ...address, country: e.target.value })
+                    }
+                  />
+                  <button
+                    type="submit"
+                    className="col-span-1 w-full py-2 mt-4 rounded-full font-medium transition bg-red-500 text-white cursor-pointer"
+                  >
+                    deliver to this address
+                  </button>
+                </form>
               </div>
-            </div>
-
-            {/* Payment Method */}
-            <div>
-              <h3 className="text-2xl font-semibold text-gray-800 mb-4">
-                Payment Method
-              </h3>
-              <div>
-                <label className="block text-gray-600 text-sm font-medium mb-1">
-                  Card Number
-                </label>
-                <input
-                  type="text"
-                  placeholder="1234 5678 9876 5432"
-                  className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-500"
-                />
-              </div>
-            </div>
+            }
           </div>
-        </div>
 
-        {/* Order Summary */}
-        <div className="mt-8 flex justify-between items-center">
-          <p className="text-xl font-bold text-gray-800">
-            Total: ₹{calculateTotal().toFixed(2)}
-          </p>
-          <div>
-            <Link
-              to="/confirmation"
-              className="bg-red-500 text-white px-6 py-2 rounded-full font-medium hover:bg-red-600 transition"
-            >
-              Complete Order
-            </Link>
+          <div className=" bg-white p-6 rounded-lg shadow-lg h-fit">
+            <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
+            <div className="border-b pb-4">
+              {cart.cartItems.map((item) => (
+                <div key={item.id} className="flex justify-between mb-2">
+                  <span>
+                    {item.name} (x{item.quantity})
+                  </span>
+                  <span>₹{item.price * item.quantity}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4">
+              <div className="flex justify-between font-medium">
+                <span>Subtotal:</span>
+                <span>₹{cart.itemsPrice}</span>
+              </div>
+              <div className="flex justify-between text-gray-600">
+                <span>Tax:</span>
+                <span>₹{cart.taxPrice}</span>
+              </div>
+              <div className="flex justify-between text-gray-600">
+                <span>Shipping:</span>
+                <span>₹{cart.shippingPrice}</span>
+              </div>
+              <div className="flex justify-between font-bold mt-2">
+                <span>Total:</span>
+                <span>₹{cart.totalPrice}</span>
+              </div>
+            </div>
+            <button className="w-full bg-red-500 text-white py-3 mt-4 rounded-md cursor-pointer">
+              Proceed to pay
+            </button>
           </div>
         </div>
       </div>

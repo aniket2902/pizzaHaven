@@ -31,7 +31,7 @@ const Carousel = () => {
   ];
 
   return (
-    <div className="carousel-container">
+    <div className="carousel-container cursor-pointer">
       <Slider {...settings}>
         {slides.map((slide, index) => (
           <div key={index} className="relative h-lvh">
