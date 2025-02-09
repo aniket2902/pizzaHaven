@@ -21,7 +21,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pizza.client.EmailClient;
+
 import com.pizza.domain.USER_ROLE;
+import com.pizza.dto.EmailUserDTO;
+import com.pizza.dto.UserRequestDTO;
 import com.pizza.exception.UserException;
 import com.pizza.pojos.Cart;
 import com.pizza.pojos.User;
@@ -32,6 +36,7 @@ import com.pizza.response.AuthResponse;
 import com.pizza.security.CustomUserDetailsService;
 import com.pizza.security.JwtProvider;
 
+import feign.FeignException;
 import jakarta.validation.Valid;
 
 
@@ -53,6 +58,11 @@ public class AuthController {
 	
 	@Autowired
 	private CartRepository cartRepository;
+	
+	@Autowired
+	EmailClient emailClient;
+	
+	ResponseEntity<EmailUserDTO> emailUserDTO;
 		
 	@PostMapping("/signup")
 	public ResponseEntity<AuthResponse> createUserHandler(@Valid @RequestBody User user) throws UserException {
@@ -62,6 +72,12 @@ public class AuthController {
 		String fullName = user.getName();
 		USER_ROLE role=user.getRole();
 		String phoneNumber = user.getPhoneNumber();
+		
+		 String emailId ="yashawatade38@gmail.com";
+	     String subject="Hi from SpringBoot Common Service";
+	     String text = "Tested!!";
+	      
+	       
 
 		User isEmailExist = userRepository.findByEmail(email).orElse(null);
 
@@ -79,6 +95,18 @@ public class AuthController {
 		createdUser.setPhoneNumber(phoneNumber);
 
 		User savedUser = userRepository.save(createdUser);
+		System.out.println(new UserRequestDTO(emailId,subject,text) + "Email CALL");
+		//emailUserDTO=emailClient.createUser(new UserRequestDTO(email,subject,text));
+//		try {
+//			
+//			
+//			//emailClient.getUser();
+//		}
+//		catch(FeignException.Conflict ce) {
+//			   System.out.println("Email not sent");
+//	           
+//		}
+		
 		
 		Cart cart = new Cart();
 		cart.setUser(savedUser);
@@ -99,6 +127,7 @@ public class AuthController {
 		authResponse.setJwt(token);
 		authResponse.setMessage("Register Success");
 		authResponse.setRoles(role);
+		authResponse.setName(email);
 
 		return new ResponseEntity<>(authResponse, HttpStatus.OK);
 
@@ -127,6 +156,7 @@ public class AuthController {
 
 
 		authResponse.setRoles(USER_ROLE.valueOf(roleName));
+		authResponse.setName(username);
 
 		return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK);
 	}

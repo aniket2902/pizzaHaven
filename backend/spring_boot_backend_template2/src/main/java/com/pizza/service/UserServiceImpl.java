@@ -1,14 +1,20 @@
 package com.pizza.service;
 
 import com.pizza.security.JwtProvider;
+
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+import com.pizza.dto.EmailUserDTO;
 import com.pizza.dto.FullUserDTO;
+import com.pizza.dto.UserRequestDTO;
 import com.pizza.pojos.User;
 import com.pizza.repository.UserRepository;
 import com.pizza.response.ApiResponse;
@@ -25,6 +31,10 @@ public class UserServiceImpl implements UserService {
 	private final ModelMapper modelMapper;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtProvider jwtProvider;
+	
+	
+	
+    
 
 	@Override
 	public ApiResponse registerNewUser(FullUserDTO dto) {
@@ -34,7 +44,9 @@ public class UserServiceImpl implements UserService {
 		
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		User savedUser = userRepository.save(user);
-		return new ApiResponse("User Registered with ID " + savedUser.getId());
+		
+		
+		return new ApiResponse("User Registered with ID " +savedUser.getId());
 	}
 
 	@Override

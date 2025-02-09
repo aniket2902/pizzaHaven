@@ -39,7 +39,6 @@ const SignUpScreen = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (values) => {
-    
     values.status = true;
     values.role = "ROLE_CUSTOMER";
 
