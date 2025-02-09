@@ -1,13 +1,24 @@
 import axios from "axios";
-import { signInFailed, signInUser } from "../slices/UserSlice";
+import { setAllUserAddresses } from "../slices/UserSlice";
 
-export function signInUserThunk(credentials) {
+export function getAllUserAddressesThunk() {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.post("/fakeApi/signin", credentials);
-      dispatch(signInUser(response.user));
+      const response = await axios.get("/fakeApi/addresses");
+      dispatch(setAllUserAddresses(response.addresses));
     } catch (error) {
-      dispatch(signInFailed(error.message));
+      console.log(error);
+    }
+  };
+}
+
+export function saveShippingAddressThunk(address) {
+  return async (dispatch, getState) => {
+    try {
+      await axios.post("/fakeApi/address", address);
+      dispatch(getAllUserAddressesThunk());
+    } catch (error) {
+      console.log(error);
     }
   };
 }

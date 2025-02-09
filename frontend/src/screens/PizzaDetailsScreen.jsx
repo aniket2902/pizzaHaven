@@ -1,6 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import pizzaImage from "../assets/mixed-pizza-with-various-ingridients.jpg";
+import { getPizzaByIdThunk } from "../Redux/thunks/PizzaThunk";
 
 const PizzaDetailsScreen = () => {
   const pizza = {
@@ -16,6 +17,14 @@ const PizzaDetailsScreen = () => {
       "Olive Oil",
     ],
   };
+
+  const params = useParams();
+
+  // const pizza = useSelector((state) => state.pizzaReducer.pizzaDetails);
+
+  useEffect(() => {
+    dispatch(getPizzaByIdThunk(params.id));
+  }, [dispatch, params.id]);
 
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-6 pt-24">
