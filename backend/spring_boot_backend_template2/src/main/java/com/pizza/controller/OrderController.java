@@ -33,6 +33,5 @@ public class OrderController {
         Long id = user.getId();
         Order order = orderService.createOrder(id);
         return ResponseEntity.ok(order);
-
     }
 }

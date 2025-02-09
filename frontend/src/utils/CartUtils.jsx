@@ -13,7 +13,7 @@ export const updateCart = (state) => {
 
   state.taxPrice = addDecimals(0.15 * itemsPrice);
 
-  state.totalPrice = addDecimals(
+  state.totalPrice = Math.round(
     parseFloat(state.itemsPrice) +
       parseFloat(state.shippingPrice) +
       parseFloat(state.taxPrice)

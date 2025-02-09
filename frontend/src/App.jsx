@@ -26,7 +26,10 @@ function App() {
         <Route path="/pizzadetails/:id" element={<PizzaDetailsScreen />} />
         <Route path="/menu" element={<MenuScreen />} />
         <Route path="/checkout" element={<CheckoutScreen />} />
-        <Route path="/confirmation" element={<OrderConfirmationScreen />} />
+        <Route
+          path="/confirmation/:orderId"
+          element={<OrderConfirmationScreen />}
+        />
         <Route path="/signin" element={<SignInScreen />} />
         <Route path="/signup" element={<SignUpScreen />} />
       </Routes>

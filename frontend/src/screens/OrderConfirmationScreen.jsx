@@ -1,8 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaCheckCircle } from "react-icons/fa";
+import { use } from "react";
 
 const OrderConfirmationScreen = () => {
+  const params = useParams();
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-6">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg text-center">
@@ -15,8 +18,8 @@ const OrderConfirmationScreen = () => {
         </p>
 
         <div className="bg-gray-100 p-4 rounded-md mb-6">
-          <p className="text-lg font-semibold text-gray-700">Order Number:</p>
-          <p className="text-red-500 text-xl font-bold">#123456</p>
+          <p className="text-lg font-semibold text-gray-700">Order Id:</p>
+          <p className="text-red-500 text-xl font-bold">{params.orderId}</p>
         </div>
 
         <Link

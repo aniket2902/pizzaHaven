@@ -8,7 +8,7 @@ export function addToCartThunk(pizza) {
       const pizzaItemForCart = { id: pizza.id, itemSize: pizza.size };
       dispatch(addToCart(pizza));
       toast.success("Item added to cart");
-      const response = await axios.post(`/additem`, pizzaItemForCart);
+      const response = await axios.post(`/cart/addItem`, pizzaItemForCart);
       //   if (response) {
       //   dispatch(addToCart(pizza));
       //   }
