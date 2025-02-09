@@ -31,7 +31,7 @@ public class OrderService {
         Order order = new Order();
         order.setUser(user);
         order.setTotalPrice(cart.getCartItems().stream().mapToDouble(item -> item.getItemSize().getPrice().doubleValue() * item.getQuantity()).sum());
-
+        
         List<OrderItem> orderItems = cart.getCartItems().stream().map(cartItem -> {
             OrderItem orderItem = new OrderItem();
             orderItem.setOrder(order);

@@ -47,4 +47,8 @@ public class User extends BaseEntity {
     @JsonIgnore
     private Address address;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Cart cart;
+
 }
