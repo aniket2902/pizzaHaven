@@ -22,5 +22,8 @@ public class Order extends BaseEntity{
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItemList;
 
+    @ManyToOne
+    private Address address;
+
 }
 
