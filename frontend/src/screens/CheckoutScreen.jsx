@@ -3,6 +3,7 @@ import { use } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveShippingAddressThunk } from "../Redux/thunks/UserThunk";
+import { FiEdit, FiTrash } from "react-icons/fi";
 // import { saveShippingAddress } from "../Redux/slices/UserSlice";
 
 const CheckoutScreen = () => {
@@ -42,9 +43,8 @@ const CheckoutScreen = () => {
 
   const cart = useSelector((state) => state.cartReducer);
 
-  const [useSavedAddress, setUseSavedAddress] = useState(
-    savedAddresses[0] ? true : false
-  );
+  const [useSavedAddress, setUseSavedAddress] = useState(false);
+  const [newAddressClicked, setNewAddressClicked] = useState(false);
 
   const [address, setAddress] = useState({
     street: "",
@@ -56,16 +56,25 @@ const CheckoutScreen = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    handleNewAddress();
     dispatch(saveShippingAddressThunk(address));
     navigate("/checkout");
   };
 
   const handleSelectedAddress = (selectedAddress) => {
     setUseSavedAddress(true);
+    setNewAddressClicked(false);
     setAddress(selectedAddress);
   };
 
   const handleNewAddress = () => {
+    if (savedAddresses.length >= 3) {
+      alert(
+        "You can save only 3 addresses. Please delete an existing address to add a new one."
+      );
+      return;
+    }
+    setNewAddressClicked(true);
     setUseSavedAddress(false);
     setAddress({
       street: "",
@@ -93,8 +102,24 @@ const CheckoutScreen = () => {
               savedAddresses.map((selectedAddress) => (
                 <div
                   key={selectedAddress.id}
-                  className="p-4 rounded-lg bg-white shadow-sm"
+                  className={`relative p-4 rounded-lg bg-white shadow-sm w-full sm:w-96 ${
+                    selectedAddress.id === address.id
+                      ? "border-2 border-red-500"
+                      : ""
+                  }`}
                 >
+                  {/* Edit & Delete Icons at Top-Right */}
+                  <div className="absolute top-2 right-2 flex space-x-2">
+                    <FiEdit
+                      className="text-blue-500 cursor-pointer hover:text-blue-700"
+                      size={20}
+                    />
+                    <FiTrash
+                      className="text-red-500 cursor-pointer hover:text-red-700"
+                      size={20}
+                    />
+                  </div>
+
                   <p className="text-gray-800 font-medium">
                     {selectedAddress.street}, {selectedAddress.city}
                   </p>
@@ -116,7 +141,7 @@ const CheckoutScreen = () => {
               </p>
             )}
 
-            {savedAddresses[0] && (
+            {
               <div className=" p-4 rounded-lg bg-white shadow-sm">
                 <p className="text-gray-800 font-medium">Add New Address</p>
                 <p className="text-gray-600">
@@ -130,13 +155,14 @@ const CheckoutScreen = () => {
                   Add New
                 </button>
               </div>
-            )}
+            }
 
-            {
+            {newAddressClicked && (
               <div className="col-span-2 bg-white p-6 rounded-lg shadow-md">
                 <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                  Enter Address
+                  {useSavedAddress ? "Selected Address" : "Enter Address"}
                 </h3>
+
                 <form
                   onSubmit={handleSubmit}
                   className="grid grid-cols-2 gap-4"
@@ -144,10 +170,9 @@ const CheckoutScreen = () => {
                   <input
                     type="text"
                     placeholder="Street"
-                    className={`p-2 border border-gray-300 focus:border-0 outline-none rounded-md focus:ring focus:ring-red-300
-                      ${
-                        useSavedAddress ? "bg-gray-200 cursor-not-allowed" : ""
-                      }`}
+                    className={`p-2 border border-gray-300 rounded-md focus:ring focus:ring-red-300 ${
+                      useSavedAddress ? "bg-gray-200 cursor-not-allowed" : ""
+                    }`}
                     value={address.street}
                     disabled={useSavedAddress}
                     onChange={(e) =>
@@ -157,10 +182,9 @@ const CheckoutScreen = () => {
                   <input
                     type="text"
                     placeholder="City"
-                    className={`p-2 border border-gray-300 focus:border-0 outline-none rounded-md focus:ring focus:ring-red-300
-                      ${
-                        useSavedAddress ? "bg-gray-200 cursor-not-allowed" : ""
-                      }`}
+                    className={`p-2 border border-gray-300 rounded-md focus:ring focus:ring-red-300 ${
+                      useSavedAddress ? "bg-gray-200 cursor-not-allowed" : ""
+                    }`}
                     value={address.city}
                     disabled={useSavedAddress}
                     onChange={(e) =>
@@ -170,10 +194,9 @@ const CheckoutScreen = () => {
                   <input
                     type="text"
                     placeholder="State"
-                    className={`p-2 border border-gray-300 focus:border-0 outline-none rounded-md focus:ring focus:ring-red-300
-                      ${
-                        useSavedAddress ? "bg-gray-200 cursor-not-allowed" : ""
-                      }`}
+                    className={`p-2 border border-gray-300 rounded-md focus:ring focus:ring-red-300 ${
+                      useSavedAddress ? "bg-gray-200 cursor-not-allowed" : ""
+                    }`}
                     value={address.state}
                     disabled={useSavedAddress}
                     onChange={(e) =>
@@ -183,10 +206,9 @@ const CheckoutScreen = () => {
                   <input
                     type="text"
                     placeholder="ZIP Code"
-                    className={`p-2 border border-gray-300 focus:border-0 outline-none rounded-md focus:ring focus:ring-red-300
-                      ${
-                        useSavedAddress ? "bg-gray-200 cursor-not-allowed" : ""
-                      }`}
+                    className={`p-2 border border-gray-300 rounded-md focus:ring focus:ring-red-300 ${
+                      useSavedAddress ? "bg-gray-200 cursor-not-allowed" : ""
+                    }`}
                     value={address.zip}
                     disabled={useSavedAddress}
                     onChange={(e) =>
@@ -196,25 +218,28 @@ const CheckoutScreen = () => {
                   <input
                     type="text"
                     placeholder="Country"
-                    className={`p-2 border border-gray-300 focus:border-0 outline-none rounded-md focus:ring focus:ring-red-300
-                      ${
-                        useSavedAddress ? "bg-gray-200 cursor-not-allowed" : ""
-                      }`}
+                    className={`p-2 border border-gray-300 rounded-md focus:ring focus:ring-red-300 ${
+                      useSavedAddress ? "bg-gray-200 cursor-not-allowed" : ""
+                    }`}
                     value={address.country}
                     disabled={useSavedAddress}
                     onChange={(e) =>
                       setAddress({ ...address, country: e.target.value })
                     }
                   />
-                  <button
-                    type="submit"
-                    className="col-span-1 w-full py-2 mt-4 rounded-full font-medium transition bg-red-500 text-white cursor-pointer"
-                  >
-                    deliver to this address
-                  </button>
+
+                  {/* Show Submit Button Only If A New Address is Being Added */}
+                  {!useSavedAddress && (
+                    <button
+                      type="submit"
+                      className="col-span-1 w-full py-2 mt-4 rounded-full font-medium transition bg-red-500 text-white cursor-pointer"
+                    >
+                      Save Address
+                    </button>
+                  )}
                 </form>
               </div>
-            }
+            )}
           </div>
 
           <div className=" bg-white p-6 rounded-lg shadow-lg h-fit">

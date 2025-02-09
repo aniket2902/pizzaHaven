@@ -65,7 +65,7 @@ const userSlice = createSlice({
     setAllUserAddresses: (state, action) => {
       state.user.shippingAddresses = action.payload;
     },
-    setShippingAddress: (state, action) => {
+    saveShippingAddress: (state, action) => {
       state.selectedAdress = action.payload;
     },
   },
@@ -79,7 +79,7 @@ export const {
   loginSuccess,
   loginFailure,
   setAllUserAddresses,
-  setShippingAddress,
+  saveShippingAddress,
   logoutSuccess,
   getUserRequest,
   getUserSuccess,
