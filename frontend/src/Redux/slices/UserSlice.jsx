@@ -51,7 +51,7 @@ const userSlice = createSlice({
     setAllUserAddresses: (state, action) => {
       state.user.shippingAddresses = action.payload;
     },
-    setShippingAddress: (state, action) => {
+    saveShippingAddress: (state, action) => {
       state.selectedAdress = action.payload;
     },
   },
@@ -66,7 +66,7 @@ export const {
   loginFailure,
   logout,
   setAllUserAddresses,
-  setShippingAddress,
+  saveShippingAddress,
 } = userSlice.actions;
 
 export default userSlice.reducer;

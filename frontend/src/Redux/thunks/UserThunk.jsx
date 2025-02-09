@@ -1,7 +1,7 @@
 import axios from "axios";
-import { setAllUserAddresses } from "../slices/UserSlice";
+import { saveShippingAddress, setAllUserAddresses } from "../slices/UserSlice";
 
-export function getAllUserAddressesThunk() {
+export function getAllUserAddressesThunk(userId) {
   return async (dispatch, getState) => {
     try {
       const response = await axios.get("/fakeApi/addresses");
@@ -15,8 +15,13 @@ export function getAllUserAddressesThunk() {
 export function saveShippingAddressThunk(address) {
   return async (dispatch, getState) => {
     try {
-      await axios.post("/fakeApi/address", address);
+      // dispatch(saveShippingAddress(address));
+      const response = await axios.post("/fakeApi/address", address);
       dispatch(getAllUserAddressesThunk());
+      // if (response) {
+      //   dispatch(saveShippingAddress(address));
+      //   dispatch(getAllUserAddressesThunk());
+      // }
     } catch (error) {
       console.log(error);
     }
