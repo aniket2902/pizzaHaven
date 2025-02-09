@@ -8,5 +8,7 @@ public interface UserService {
 	ApiResponse registerNewUser(FullUserDTO dto);
 
     User findUserProfileByJwt(String jwt);
+
+    User findById(Long id);
 }
 

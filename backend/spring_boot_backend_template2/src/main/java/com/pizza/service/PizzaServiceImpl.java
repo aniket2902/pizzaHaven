@@ -17,7 +17,9 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class PizzaServiceImpl implements PizzaService{
+public class PizzaServiceImpl implements PizzaService {
+
+
 
     @Autowired
     private PizzaRepository pizzaRepository;
@@ -25,11 +27,25 @@ public class PizzaServiceImpl implements PizzaService{
     @Autowired
     private ModelMapper modelMapper;
 
+
+
+    @Override
+    public Item getPizzaDetailsItem(Long id) {
+        return pizzaRepository.findById(id).orElseThrow(() -> new ApiException("pizza not found"));
+    }
+@Override
+@Transactional(readOnly = true)
+    public Item getPizzaDetailsItemCart(Long id) {
+        return pizzaRepository.findByIdWithItemSizes(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid pizza ID"));
+    }
+
+
     @Override
     @Transactional(readOnly = true)
     public List<ItemDTO> getAllPizzas() {
-        List<Item> pizzas=pizzaRepository.findAll();
-        return pizzas.stream().map(item -> modelMapper.map(item,ItemDTO.class))
+        List<Item> pizzas = pizzaRepository.findAll();
+        return pizzas.stream().map(item -> modelMapper.map(item, ItemDTO.class))
                 .collect(Collectors.toList());
     }
 
@@ -38,15 +54,17 @@ public class PizzaServiceImpl implements PizzaService{
     public ItemDTO getPizzaDetails(Long id) {
         Item pizza=pizzaRepository.findById(id).orElseThrow(()->new ApiException("pizza not found"));
 
-        ItemDTO itemDTO=modelMapper.map(pizza, ItemDTO.class);
+        ItemDTO itemDTO = modelMapper.map(pizza, ItemDTO.class);
 
-        if(pizza.getItemSizes()!=null){
+        if (pizza.getItemSizes() != null) {
             itemDTO.setItemSizes(pizza.getItemSizes().stream()
                     .map(itemSize -> modelMapper.map(itemSize, ItemSizeDTO.class)).collect(Collectors.toList()));
         }
 
         return itemDTO;
     }
+
+
 
     @Override
     public ApiResponse addPizza(Item pizza) {
@@ -67,7 +85,7 @@ public class PizzaServiceImpl implements PizzaService{
         pizza.setImageUrl(updatedPizzaDetails.getImageUrl());
 
         if (updatedPizzaDetails.getItemSizes() != null) {
-            updatedPizzaDetails.getItemSizes().forEach(size->size.setItem(pizza));
+            updatedPizzaDetails.getItemSizes().forEach(size -> size.setItem(pizza));
             pizza.setItemSizes(updatedPizzaDetails.getItemSizes());
         }
 
@@ -77,7 +95,7 @@ public class PizzaServiceImpl implements PizzaService{
 
     @Override
     public ApiResponse deletePizzaDetails(long id) {
-        Item pizza=pizzaRepository.findById(id).orElseThrow(()->new ApiException("pizza not found"));
+        Item pizza = pizzaRepository.findById(id).orElseThrow(() -> new ApiException("pizza not found"));
         pizzaRepository.delete(pizza);
         return new ApiResponse("Pizza deleted successfully");
     }

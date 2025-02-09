@@ -17,9 +17,13 @@ public interface PizzaService {
 
     public ItemDTO getPizzaDetails(Long id);
 
+    public Item getPizzaDetailsItem(Long id);
+
     public ApiResponse addPizza(Item pizza);
 
     public ApiResponse updatePizzaDetails(long id, Item updatedPizzaDetails);
 
     public ApiResponse deletePizzaDetails(long id);
+
+    public Item getPizzaDetailsItemCart(Long id);
 }
