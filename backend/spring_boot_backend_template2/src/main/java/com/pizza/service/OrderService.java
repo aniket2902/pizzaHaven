@@ -1,5 +1,6 @@
 package com.pizza.service;
 
+import com.pizza.domain.ORDER_STATUS;
 import com.pizza.pojos.Cart;
 import com.pizza.pojos.CartItem;
 import com.pizza.pojos.Order;
@@ -26,12 +27,13 @@ public class OrderService {
 
     public Order createOrder(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        Cart cart = (Cart) cartRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("Cart not found"));
+        Cart cart = cartRepository.findByUserIdWithCartItems(userId).orElseThrow(() -> new RuntimeException("Cart not found"));
 
         Order order = new Order();
         order.setUser(user);
+        order.setStatus(ORDER_STATUS.IN_PROGRESS);
         order.setTotalPrice(cart.getCartItems().stream().mapToDouble(item -> item.getItemSize().getPrice().doubleValue() * item.getQuantity()).sum());
-        
+
         List<OrderItem> orderItems = cart.getCartItems().stream().map(cartItem -> {
             OrderItem orderItem = new OrderItem();
             orderItem.setOrder(order);
@@ -47,5 +49,17 @@ public class OrderService {
         cartRepository.save(cart);
 
         return orderRepository.save(order);
+    }
+
+    public void clearCartByUserId(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        Cart cart = cartRepository.findByUser(user);
+        cartRepository.delete(cart);
+    }
+
+    public List<Order> getAllOrders(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return orderRepository.findByUser(user);
+ 
     }
 }

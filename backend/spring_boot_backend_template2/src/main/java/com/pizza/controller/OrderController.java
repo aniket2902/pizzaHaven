@@ -2,10 +2,7 @@ package com.pizza.controller;
 
 
 import com.pizza.exception.ApiException;
-import com.pizza.pojos.Cart;
-import com.pizza.pojos.CartItem;
-import com.pizza.pojos.Order;
-import com.pizza.pojos.User;
+import com.pizza.pojos.*;
 import com.pizza.service.CartItemListService;
 import com.pizza.service.CartService;
 import com.pizza.service.OrderService;
@@ -28,11 +25,24 @@ public class OrderController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<?> createOrder(@RequestHeader("Authorization") String jwt) {
+    public ResponseEntity<?> createOrder(@RequestHeader("Authorization") String jwt, @RequestBody Address address) {
+//
         User user = userService.findUserProfileByJwt(jwt);
+//        User user = userService.findById(1L);
+
         Long id = user.getId();
         Order order = orderService.createOrder(id);
-        return ResponseEntity.ok(order);
+        orderService.clearCartByUserId(id); // Clear the cart after creating the order
+        return ResponseEntity.ok("done");
+
+    }
+
+    @GetMapping("/getAllOrdersOfUser")
+    public ResponseEntity<?> getAllOrders(@RequestHeader("Authorization") String jwt) {
+        User user = userService.findUserProfileByJwt(jwt);
+        Long id = user.getId();
+        List<Order> orders = orderService.getAllOrders(id);
+        return ResponseEntity.ok(orders);
 
     }
 }

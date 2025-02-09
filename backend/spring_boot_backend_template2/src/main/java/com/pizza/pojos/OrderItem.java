@@ -14,8 +14,6 @@ public class OrderItem extends BaseEntity{
     private int quantity;
     private Double price;
 
-    @Enumerated(EnumType.STRING)
-    private ORDER_STATUS status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

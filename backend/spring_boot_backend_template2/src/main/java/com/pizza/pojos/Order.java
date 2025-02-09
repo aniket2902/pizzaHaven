@@ -1,5 +1,6 @@
 package com.pizza.pojos;
 
+import com.pizza.domain.ORDER_STATUS;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,6 +16,9 @@ import java.util.List;
 public class Order extends BaseEntity{
 
     private Double totalPrice;
+
+    @Enumerated(EnumType.STRING)
+    private ORDER_STATUS status;
 
     @ManyToOne
     private User user;
