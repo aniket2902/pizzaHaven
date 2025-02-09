@@ -33,7 +33,7 @@ const SignInScreen = () => {
     <div className="min-h-screen bg-gray-100 flex justify-center items-center py-12 px-6">
       <div className="bg-white shadow-lg rounded-lg p-8 w-full sm:w-96">
         <h2 className="text-3xl font-bold text-center text-red-500 mb-6">
-          Sign Up
+          Sign In
         </h2>
         <Formik
           initialValues={initialValues}

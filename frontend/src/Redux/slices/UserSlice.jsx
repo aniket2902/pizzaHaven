@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: null,
   shippingAddresses: [],
   selectedAdress: null,
   jwt: localStorage.getItem("jwt") || null,
+  userData: null,
+  jwt: null,
   isLoading: false,
   error: null,
   success: null,
@@ -21,8 +22,9 @@ const userSlice = createSlice({
     },
     registerSuccess: (state, action) => {
       state.isLoading = false;
-      state.jwt = action.payload;
+      state.jwt = action.payload.jwt;
       state.success = "Register Success";
+      state.userData = action.payload.user;
     },
     registerFailed: (state, action) => {
       state.isLoading = false;
@@ -36,17 +38,29 @@ const userSlice = createSlice({
     loginSuccess: (state, action) => {
       state.isLoading = false;
       state.jwt = action.payload.jwt;
-      state.user = action.payload.user;
+      state.userData = action.payload.user;
       state.success = "Login Success";
     },
     loginFailure: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
-    logout: (state) => {
+    logoutSuccess: (state) => {
       state.jwt = null;
-      state.user = null;
-      localStorage.removeItem("jwt");
+      state.userData = null;
+      state.success = "Logout Success";
+    },
+    getUserRequest: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    getUserSuccess: (state, action) => {
+      state.isLoading = false;
+      state.user = action.payload;
+    },
+    getUserFailure: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
     },
     setAllUserAddresses: (state, action) => {
       state.user.shippingAddresses = action.payload;
@@ -64,9 +78,12 @@ export const {
   loginRequest,
   loginSuccess,
   loginFailure,
-  logout,
   setAllUserAddresses,
   setShippingAddress,
+  logoutSuccess,
+  getUserRequest,
+  getUserSuccess,
+  getUserFailure,
 } = userSlice.actions;
 
 export default userSlice.reducer;

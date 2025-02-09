@@ -1,10 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { FaShoppingCart, FaSearch, FaBars, FaTimes } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  FaShoppingCart,
+  FaSearch,
+  FaBars,
+  FaTimes,
+  FaUserCircle,
+} from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUserThunk } from "../Redux/thunks/AuthThunk";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   const cart = useSelector((state) => state.cartReducer);
 
@@ -13,6 +22,17 @@ const Navbar = () => {
     0
   );
 
+  let { userData } = useSelector((state) => state.userReducer);
+  console.log(userData);
+  if (userData == undefined || userData == null)
+    userData = localStorage.getItem("name");
+
+  console.log("User from NavBar", userData);
+
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logoutUserThunk({ navigate }));
+  };
   return (
     <nav className="bg-white shadow-md fixed w-full top-0 z-50">
       <div className="container mx-auto px-6 py-3 flex justify-between items-center">
@@ -54,12 +74,49 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <Link
+          {/* <Link
             to="/signin"
             className="border border-red-500 text-red-500 px-4 py-1 rounded-full font-medium hover:bg-red-500 hover:text-white transition"
           >
             sign in
-          </Link>
+          </Link> */}
+          {userData ? (
+            <div className="relative">
+              <button
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className="flex items-center space-x-2 border border-gray-300 px-4 py-1 rounded-full font-medium hover:bg-gray-100 transition"
+              >
+                <FaUserCircle size={20} className="text-gray-600" />
+                <span>{userData.slice(0, 2).toUpperCase()}</span>
+              </button>
+
+              {/* Dropdown Menu */}
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg overflow-hidden">
+                  <Link
+                    to="/profile"
+                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition duration-300 relative"
+                    onClick={() => setDropdownOpen(false)}
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    onClick={() => handleLogout()}
+                    className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link
+              to="/signin"
+              className="border border-red-500 text-red-500 px-4 py-1 rounded-full font-medium hover:bg-red-500 hover:text-white transition"
+            >
+              Sign In
+            </Link>
+          )}
 
           <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
