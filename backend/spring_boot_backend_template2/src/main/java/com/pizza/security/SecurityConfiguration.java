@@ -28,6 +28,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(Authorize -> Authorize
                         .requestMatchers("/api/pizzas/**").permitAll()
                         .requestMatchers("/api/payment/**").permitAll()
+                        .requestMatchers("/api/cart/**").permitAll()
                 		.requestMatchers("/api/admin/**").hasAnyRole("RESTAURANT_MANAGER","ADMIN")
                                 .requestMatchers("/api/**").authenticated()
                                 .anyRequest().permitAll()
