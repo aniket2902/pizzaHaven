@@ -46,9 +46,9 @@ public class User extends BaseEntity {
 //    @ToString.Exclude
 //    private Address address;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    @ToString.Exclude
-    private Cart cart;
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    @ToString.Exclude
+//    private Cart cart;
 
 }
