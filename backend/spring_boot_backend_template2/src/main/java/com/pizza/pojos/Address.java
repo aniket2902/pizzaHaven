@@ -20,7 +20,7 @@ public class Address extends BaseEntity {
     private String zipCode;
     private String country;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "user_id")
     @ToString.Exclude
     private User user;

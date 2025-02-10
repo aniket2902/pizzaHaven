@@ -1,5 +1,14 @@
 package com.pizza.dto;
 
-public class OutletDto {
+import com.pizza.pojos.Address;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class OutletDto {
+	Address address;
 }

@@ -11,11 +11,14 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "outlet")
 public class Outlet extends BaseEntity{
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "manager_id")
     private User manager;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
+    private double latitude;
+    private double longitude;
+    
 }
