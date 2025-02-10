@@ -3,6 +3,7 @@ package com.pizza.service;
 import com.pizza.domain.ORDER_STATUS;
 import com.pizza.dto.OrderDTO;
 import com.pizza.dto.OrderItemDTO;
+import com.pizza.dto.OrderStatus;
 import com.pizza.pojos.*;
 import com.pizza.repository.AddressRepository;
 import com.pizza.repository.OrderRepository;
@@ -155,5 +156,11 @@ public class OrderService {
         }
 
         return od;
+    }
+
+    public void updateStatus(OrderStatus orderStatus) {
+        Order order = orderRepository.findById(orderStatus.getId()).orElseThrow(() -> new RuntimeException("Something's wrong"));
+        order.setStatus(orderStatus.getStatus());
+        orderRepository.save(order);
     }
 }

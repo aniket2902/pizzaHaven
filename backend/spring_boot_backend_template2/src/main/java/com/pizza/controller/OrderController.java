@@ -1,6 +1,7 @@
 package com.pizza.controller;
 
 
+import com.pizza.dto.OrderStatus;
 import com.pizza.pojos.*;
 import com.pizza.service.CartItemListService;
 import com.pizza.service.CartService;
@@ -57,5 +58,17 @@ public class OrderController {
     @GetMapping("/getAllOrders")
     public ResponseEntity<?> getAllOrders() {
         return ResponseEntity.status(HttpStatus.OK).body(orderService.findAll());
+    }
+
+    @PostMapping("/changeStatus")
+    public ResponseEntity<?> changStatus(@RequestBody OrderStatus orderStatus){
+        try {
+            orderService.updateStatus(orderStatus);
+            return ResponseEntity.status(HttpStatus.OK).body("Status Updated");
+        }
+        catch(RuntimeException e ){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unable to update address");
+        }
+
     }
 }
