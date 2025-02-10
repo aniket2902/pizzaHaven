@@ -4,10 +4,12 @@ import com.pizza.domain.PAYMENT_METHOD;
 import com.pizza.domain.PAYMENT_STATUS;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "payments")

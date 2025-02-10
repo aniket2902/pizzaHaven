@@ -1,11 +1,13 @@
 package com.pizza.pojos;
 
+import com.pizza.domain.ORDER_STATUS;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Builder
@@ -16,6 +18,9 @@ public class Order extends BaseEntity{
 
     private Double totalPrice;
 
+    @Enumerated(EnumType.STRING)
+    private ORDER_STATUS status;
+
     @ManyToOne
     private User user;
 
@@ -23,7 +28,10 @@ public class Order extends BaseEntity{
     private List<OrderItem> orderItemList;
 
     @ManyToOne
+    @ToString.Exclude
     private Address address;
+
+
 
 }
 

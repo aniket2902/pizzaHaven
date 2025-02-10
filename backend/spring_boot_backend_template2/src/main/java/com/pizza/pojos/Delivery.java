@@ -3,9 +3,11 @@ package com.pizza.pojos;
 import com.pizza.domain.DELIVERY_STATUS;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "delivery")

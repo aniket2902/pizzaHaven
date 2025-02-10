@@ -4,9 +4,12 @@ package com.pizza.pojos;
 import com.pizza.domain.ORDER_STATUS;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @Table(name = "order_items")
@@ -14,11 +17,10 @@ public class OrderItem extends BaseEntity{
     private int quantity;
     private Double price;
 
-    @Enumerated(EnumType.STRING)
-    private ORDER_STATUS status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @ToString.Exclude
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -27,5 +29,6 @@ public class OrderItem extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
+    @ToString.Exclude
     private Order order;
 }
