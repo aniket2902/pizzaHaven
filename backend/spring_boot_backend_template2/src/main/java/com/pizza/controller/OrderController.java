@@ -1,8 +1,7 @@
 package com.pizza.controller;
 
 
-import com.pizza.dto.OrderDTO;
-import com.pizza.exception.ApiException;
+import com.pizza.dto.OrderStatus;
 import com.pizza.pojos.*;
 import com.pizza.service.CartItemListService;
 import com.pizza.service.CartService;
@@ -12,8 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.*;
 
 @RestController
 @RequestMapping("/orders")
@@ -55,5 +52,23 @@ public class OrderController {
     public ResponseEntity<?> getOrders(@RequestHeader("Authorization") String jwt) {
         User user = userService.findUserProfileByJwt(jwt);
         return ResponseEntity.ok(orderService.byid(user.getId()));
+    }
+
+    //for Admin
+    @GetMapping("/getAllOrders")
+    public ResponseEntity<?> getAllOrders() {
+        return ResponseEntity.status(HttpStatus.OK).body(orderService.findAll());
+    }
+
+    @PostMapping("/changeStatus")
+    public ResponseEntity<?> changStatus(@RequestBody OrderStatus orderStatus){
+        try {
+            orderService.updateStatus(orderStatus);
+            return ResponseEntity.status(HttpStatus.OK).body("Status Updated");
+        }
+        catch(RuntimeException e ){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unable to update address");
+        }
+
     }
 }

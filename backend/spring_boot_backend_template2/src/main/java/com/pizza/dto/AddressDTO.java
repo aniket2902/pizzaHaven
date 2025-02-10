@@ -1,7 +1,5 @@
 package com.pizza.dto;
 
-import java.util.Set;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,4 +14,5 @@ public class AddressDTO {
     private String state;
     private String zipCode;
     private String country;
+
 }

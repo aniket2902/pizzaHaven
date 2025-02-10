@@ -21,6 +21,8 @@ import com.pizza.response.ApiResponse;
 
 import com.pizza.exception.ApiException;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -58,6 +60,21 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findById(Long id) {
 		return userRepository.findById(id).orElseThrow(() -> new ApiException("User not found with ID: " + id));
+	}
+
+	@Override
+	public List<User> findAll() {
+		return userRepository.findAll();
+	}
+
+	@Override
+	public void save(User existingUser) {
+		userRepository.save(existingUser);
+	}
+
+	@Override
+	public void delete(User user) {
+		userRepository.delete(user);
 	}
 
 
