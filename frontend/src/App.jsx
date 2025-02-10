@@ -14,6 +14,7 @@ import UserProfileScreen from "./screens/UserProfileScreen";
 import OrderConfirmationScreen from "./screens/OrderConfirmationScreen";
 import HomeScreen from "./screens/HomeScreen";
 import Profile from "./screens/Profile";
+import Admin from "./AdminComponents/Admin/Admin";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/signin" element={<SignInScreen />} />
         <Route path="/signup" element={<SignUpScreen />} />
         <Route path="/profile/*" element={<Profile />} />
+        <Route path="/admin/outlets/*" element={false? <CreateOutletForm/>:<Admin/>} />
       </Routes>
       {/* <Profile/> */}
       <Footer />

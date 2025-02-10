@@ -25,7 +25,7 @@ const ProfileNavigation = () => {
     navigate("/");
   };
 
-  return ( // ✅ Add return statement here
+  return (
     <nav className="h-full mt-12 p-6 flex flex-col space-y-6 text-gray-700 bg-gray-100 shadow-md">
       {menuItems.map((item) => (
         <div
