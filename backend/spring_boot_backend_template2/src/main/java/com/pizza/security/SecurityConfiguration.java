@@ -26,7 +26,7 @@ public class SecurityConfiguration {
 
         http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(Authorize -> Authorize
-                        .requestMatchers("/api/pizzas/**","/api/user/**").permitAll()
+                        .requestMatchers("/api/pizzas/**","/api/user/**","/api/address/**").permitAll()
                         .requestMatchers("/api/payment/**").permitAll()
                         .requestMatchers("/api/cart/**").permitAll()
                 		.requestMatchers("/api/admin/**").hasAnyRole("RESTAURANT_MANAGER","ADMIN")
