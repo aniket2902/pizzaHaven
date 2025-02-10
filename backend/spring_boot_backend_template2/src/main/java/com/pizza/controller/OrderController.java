@@ -7,6 +7,7 @@ import com.pizza.service.CartService;
 import com.pizza.service.OrderService;
 import com.pizza.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,5 +51,11 @@ public class OrderController {
     public ResponseEntity<?> getOrders(@RequestHeader("Authorization") String jwt) {
         User user = userService.findUserProfileByJwt(jwt);
         return ResponseEntity.ok(orderService.byid(user.getId()));
+    }
+
+    //for Admin
+    @GetMapping("/getAllOrders")
+    public ResponseEntity<?> getAllOrders() {
+        return ResponseEntity.status(HttpStatus.OK).body(orderService.findAll());
     }
 }
