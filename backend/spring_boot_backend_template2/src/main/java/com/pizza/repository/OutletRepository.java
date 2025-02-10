@@ -10,7 +10,7 @@ import com.pizza.pojos.Outlet;
 public interface OutletRepository extends JpaRepository<Outlet, Long>{
 	@Query(value = """
 	        SELECT * FROM outlet
-	        ORDER BY (6371 * 
+	         ORDER BY (6371 * 
 	            acos(
 	                cos(radians(:latitude)) * 
 	                cos(radians(latitude)) * 

@@ -269,3 +269,47 @@ org.eclipse.core.runtime.CoreException: Could not resolve artifact org.springfra
 2025-02-10 20:14:35,858 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
 2025-02-10 20:14:35,865 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
 2025-02-10 20:14:35,867 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\pilor\OneDrive\Desktop\pizza\pizzaHaven\backend\spring_boot_backend_template2\src\test\resources
+2025-02-10 20:16:28,532 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-02-10 20:16:28,536 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-02-10 20:16:28,539 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\pilor\OneDrive\Desktop\pizza\pizzaHaven\backend\spring_boot_backend_template2\src\test\resources
+2025-02-10 20:17:10,717 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-02-10 20:17:10,725 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-02-10 20:17:10,729 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\pilor\OneDrive\Desktop\pizza\pizzaHaven\backend\spring_boot_backend_template2\src\test\resources
+2025-02-10 20:21:28,798 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-02-10 20:21:28,803 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-02-10 20:21:28,845 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\pilor\OneDrive\Desktop\pizza\pizzaHaven\backend\spring_boot_backend_template2\src\test\resources
+2025-02-10 20:21:52,774 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-02-10 20:21:52,780 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-02-10 20:21:52,783 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\pilor\OneDrive\Desktop\pizza\pizzaHaven\backend\spring_boot_backend_template2\src\test\resources
+2025-02-10 20:22:31,710 [Worker-19: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-02-10 20:22:31,716 [Worker-19: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-02-10 20:22:31,719 [Worker-19: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\pilor\OneDrive\Desktop\pizza\pizzaHaven\backend\spring_boot_backend_template2\src\test\resources
+2025-02-10 22:32:45,459 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-02-10 22:32:45,685 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-02-10 22:32:45,692 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\pilor\OneDrive\Desktop\pizza\pizzaHaven\backend\spring_boot_backend_template2\src\test\resources
+2025-02-10 22:33:31,188 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-02-10 22:33:31,271 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-02-10 22:33:31,275 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\pilor\OneDrive\Desktop\pizza\pizzaHaven\backend\spring_boot_backend_template2\src\test\resources
+2025-02-10 22:34:10,934 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-02-10 22:34:10,939 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-02-10 22:34:10,941 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\pilor\OneDrive\Desktop\pizza\pizzaHaven\backend\spring_boot_backend_template2\src\test\resources
+2025-02-10 22:37:54,769 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-02-10 22:37:54,773 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-02-10 22:37:54,775 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\pilor\OneDrive\Desktop\pizza\pizzaHaven\backend\spring_boot_backend_template2\src\test\resources
+2025-02-10 22:41:23,624 [Worker-31: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-02-10 22:41:23,632 [Worker-31: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-02-10 22:41:23,634 [Worker-31: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\pilor\OneDrive\Desktop\pizza\pizzaHaven\backend\spring_boot_backend_template2\src\test\resources
+2025-02-10 22:43:15,791 [Worker-31: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-02-10 22:43:15,865 [Worker-31: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-02-10 22:43:15,871 [Worker-31: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\pilor\OneDrive\Desktop\pizza\pizzaHaven\backend\spring_boot_backend_template2\src\test\resources
+2025-02-10 22:45:05,092 [Worker-31: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-02-10 22:45:05,110 [Worker-31: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-02-10 22:45:05,119 [Worker-31: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\pilor\OneDrive\Desktop\pizza\pizzaHaven\backend\spring_boot_backend_template2\src\test\resources
+2025-02-10 22:54:46,449 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-02-10 22:54:46,457 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-02-10 22:54:46,461 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\pilor\OneDrive\Desktop\pizza\pizzaHaven\backend\spring_boot_backend_template2\src\test\resources
+2025-02-10 23:21:33,079 [Worker-33: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-02-10 23:21:33,102 [Worker-33: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-02-10 23:21:33,105 [Worker-33: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\pilor\OneDrive\Desktop\pizza\pizzaHaven\backend\spring_boot_backend_template2\src\test\resources
+2025-02-10 23:22:37,910 [Stop Help Server] INFO  org.eclipse.jetty.server.Server - Stopped oejs.Server@74717d6b{STOPPING}[12.0.15,sto=0]
+2025-02-10 23:22:37,955 [Stop Help Server] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@65cd38a1{HTTP/1.1, (http/1.1)}{127.0.0.1:0}

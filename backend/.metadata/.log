@@ -379,3 +379,6 @@ java.lang.NullPointerException: Cannot invoke "org.eclipse.jdt.core.IClasspathEn
 
 !ENTRY org.springframework.tooling.boot.ls 1 0 2025-02-10 20:09:55.139
 !MESSAGE Boot project ADDED: gateway
+
+!ENTRY org.eclipse.lsp4e 2 0 2025-02-10 22:50:05.675
+!MESSAGE LS Hover Html and JDT hover html were naively concatenated as LS hover HTML BODY tag wasn't found

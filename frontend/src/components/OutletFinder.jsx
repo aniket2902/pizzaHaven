@@ -29,6 +29,25 @@ const AddressPopup = ({ onClose, onSelect }) => {
         }
     };
 
+    const [city, setCity] = useState("");
+
+    const handleCitySubmit = async () => {
+        try {
+            const response = await axios.get(
+                `https://nominatim.openstreetmap.org/search?format=json&q=${city}`
+            );
+            if (response.data.length > 0) {
+                const { lat, lon, display_name } = response.data[0];
+                console.log(lat,lon,display_name);
+                onSelect(lat, lon, display_name);
+            } else {
+                setError("City not found");
+            }
+        } catch (error) {
+            setError("Failed to fetch city coordinates");
+        }
+    };
+
     return (
         <div
             style={{
@@ -46,6 +65,16 @@ const AddressPopup = ({ onClose, onSelect }) => {
                 <button className="w-full bg-green-500 text-white p-2 rounded" onClick={handleUseCurrentLocation}>
                     Use My Current Location
                 </button>
+                <input
+                    type="text"
+                    className="w-full mt-4 p-2 border rounded"
+                    placeholder="Enter your city"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                />
+                <button className="w-full bg-blue-500 text-white p-2 rounded mt-2" onClick={handleCitySubmit}>
+                    Use This City
+                </button>
                 {error && <p className="text-red-500 mt-2">{error}</p>}
             </div>
         </div>
@@ -55,28 +84,42 @@ const AddressPopup = ({ onClose, onSelect }) => {
 const OutletFinder = () => {
     const [showPopup, setShowPopup] = useState(true);
     const [outlet, setOutlet] = useState(null);
-    const [selectedAddress, setSelectedAddress] = useState(localStorage.getItem("outlet")?true:false);
-
+    const [selectedAddress, setSelectedAddress] = useState(null);
+    const [ifAddress,setIfAddress]=useState(localStorage.getItem("outlet")?true:false); 
     const handleAddressSelect = (latitude, longitude, address) => {
         setSelectedAddress(address);
         setShowPopup(false);
-
+        //debugger;
         axios
             .get("http://localhost:8081/outlet/nearest", {
                 params: { latitude, longitude },
             })
             .then((response) => {
-                setOutlet(response.data);
-                localStorage.setItem("outlet", JSON.stringify(response.data));
+                let newOutlet=response.data.address;
+                setOutlet(newOutlet);
+                console.log("Location",newOutlet.city,selectedAddress);
+                localStorage.setItem("outlet",JSON.stringify(newOutlet));
             })
             .catch(() => {
                 alert("Error fetching Outlet data");
             });
     };
 
+    useEffect(() => {
+        if (outlet) {
+            console.log("Updated Outlet:", outlet);
+        }
+    }, [outlet]);
+
+    useEffect(() => {
+        if (selectedAddress) {
+            console.log("Updated Outlet:", selectedAddress);
+        }
+    }, [selectedAddress]);
+
     return (
         <>
-        {!selectedAddress && <div
+        {!ifAddress && <div
             style={{
                 position: "fixed",
                 inset: 0,
@@ -94,16 +137,16 @@ const OutletFinder = () => {
             {!showPopup && outlet ? (
                 <div className="bg-white p-6 rounded-lg shadow-lg w-96">
                     <h2 className="text-2xl font-bold">Closest outlet</h2>
-                    <h3 className="text-xl">{outlet.address?.city}</h3>
+                    <h3 className="text-xl">{outlet?.city}</h3>
                     <p>
-                        {outlet.address?.street}, {outlet.address?.city}, {outlet.address?.state}, {outlet.address?.zipCode}, {outlet.address?.country}
+                        {outlet?.street}, {outlet?.city}, {outlet?.state}, {outlet?.zipCode}, {outlet?.country}
                     </p>
-                    <button className="w-full bg-green-500 text-white p-2 rounded" onClick={() => setSelectedAddress(true)}>Ok</button>
+                    <button className="w-full bg-green-500 text-white p-2 rounded" onClick={() => setIfAddress(true)}>Ok</button>
                 </div>
             ) : (
                 <div className="bg-white p-6 rounded-lg shadow-lg w-96">
                     <h3 className="text-2xl font-bold">Not Deliverable in your area</h3>
-                    <button className="w-full bg-green-500 text-white p-2 rounded" onClick={() => setSelectedAddress(false)}>Ok</button>
+                    <button className="w-full bg-green-500 text-white p-2 rounded" onClick={() => setIfAddress(true)}>Ok</button>
                 </div>
             )}
         </div>}
