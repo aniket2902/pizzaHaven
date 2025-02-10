@@ -13,6 +13,7 @@ import CheckoutScreen from "./screens/CheckoutScreen";
 import UserProfileScreen from "./screens/UserProfileScreen";
 import OrderConfirmationScreen from "./screens/OrderConfirmationScreen";
 import HomeScreen from "./screens/HomeScreen";
+import Profile from "./screens/Profile";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<HomeScreen />} />
-        <Route path="/user" element={<UserProfileScreen />} />
+        {/* <Route path="/profile/user" element={<UserProfileScreen />} /> */}
         <Route path="/cart" element={<CartScreen />} />
         <Route path="/pizzadetails" element={<PizzaDetailsScreen />} />
         <Route path="/pizzadetails/:id" element={<PizzaDetailsScreen />} />
@@ -32,7 +33,9 @@ function App() {
         />
         <Route path="/signin" element={<SignInScreen />} />
         <Route path="/signup" element={<SignUpScreen />} />
+        <Route path="/profile/*" element={<Profile />} />
       </Routes>
+      {/* <Profile/> */}
       <Footer />
     </>
   );

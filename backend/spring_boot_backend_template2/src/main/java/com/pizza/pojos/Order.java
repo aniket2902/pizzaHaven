@@ -7,6 +7,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Builder
@@ -27,7 +28,10 @@ public class Order extends BaseEntity{
     private List<OrderItem> orderItemList;
 
     @ManyToOne
+    @ToString.Exclude
     private Address address;
+
+
 
 }
 
