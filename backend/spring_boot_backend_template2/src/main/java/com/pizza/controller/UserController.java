@@ -27,6 +27,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Something went Wrong");
         }
     }
+    @GetMapping("/")
+    public ResponseEntity<?> getUserByjwt(@RequestHeader("Authorization") String jwt) {
+        try {
+
+            User user = userService.findUserProfileByJwt(jwt);
+            user.setPassword(null);
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Something went Wrong");
+        }
+    }
 
     @GetMapping("/allUsers")
     public ResponseEntity<?> getAllUsers() {
@@ -41,21 +52,17 @@ public class UserController {
 
 
     @PutMapping("/updateUser")
-    public ResponseEntity<?> updateUser(@RequestBody User incomingUser) {
+    public ResponseEntity<?> updateUser(@RequestHeader("Authorization") String jwt, @RequestBody User incomingUser) {
         try {
-            User existingUser = userService.findById(incomingUser.getId());
-            existingUser.setName(incomingUser.getName());
-            existingUser.setEmail(incomingUser.getEmail());
-            existingUser.setPassword(incomingUser.getPassword());
-            existingUser.setPhoneNumber(incomingUser.getPhoneNumber());
-            existingUser.setStatus(incomingUser.getStatus());
-            existingUser.setRole(incomingUser.getRole());
-
-            userService.save(existingUser);
+            User user = userService.findUserProfileByJwt(jwt);
+            user.setName(incomingUser.getName());
+            user.setPhoneNumber(incomingUser.getPhoneNumber());
+            userService.save(user);
             
             return ResponseEntity.status(HttpStatus.OK).body("User is Updated");
 
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went Wrong");
         }
     }
