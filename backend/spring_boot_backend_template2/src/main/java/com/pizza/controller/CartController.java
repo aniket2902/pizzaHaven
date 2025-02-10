@@ -25,9 +25,10 @@ public class CartController {
 
     @PostMapping("/addItem")
     @Transactional
-    public ResponseEntity<?> addItemToOrder(@RequestHeader("Authorization") String jwt, @RequestBody CartItemPizzaIdAndSize cartItemPizzaIdAndSize) {
-//        User user = userService.findById(1L);
-        User user = userService.findUserProfileByJwt(jwt);
+    public ResponseEntity<?> addItemToOrder( @RequestBody CartItemPizzaIdAndSize cartItemPizzaIdAndSize) {
+//        @RequestHeader("Authorization") String jwt,
+        User user = userService.findById(1L);
+//        User user = userService.findUserProfileByJwt(jwt);
 
         Cart cart = cartService.findCartByUser(user);
         if (cart == null) {
