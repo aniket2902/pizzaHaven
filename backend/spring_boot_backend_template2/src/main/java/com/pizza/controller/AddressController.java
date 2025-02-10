@@ -1,5 +1,6 @@
 package com.pizza.controller;
 
+import com.pizza.dto.AddressDTO;
 import com.pizza.pojos.Address;
 import com.pizza.pojos.User;
 import com.pizza.service.AddressService;
@@ -24,13 +25,15 @@ public class AddressController {
         try {
 
             User user = userService.findUserProfileByJwt(jwt);
-            List<Address> address = addressService.findByUser(user);
+            System.out.println(user);
+            List<AddressDTO> address = addressService.findAllByUser(user);
 
-            if(address==null)
+            if(address==null || address.isEmpty())
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There is no address for the user");
 
             return ResponseEntity.status(HttpStatus.OK).body(address);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Something Went Wrong");
         }
     }
@@ -43,5 +46,15 @@ public class AddressController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unable to update address");
         }
+    }
+
+
+    @GetMapping("/test")
+    public ResponseEntity<?> test(@RequestHeader("Authorization") String jwt) {
+        System.out.println(jwt);
+        User user = userService.findUserProfileByJwt(jwt);
+        System.out.println(user);
+
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 }
