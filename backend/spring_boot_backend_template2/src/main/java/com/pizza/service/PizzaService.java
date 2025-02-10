@@ -15,7 +15,7 @@ public interface PizzaService {
 
     public List<ItemDTO> getAllPizzas();
 
-    public ItemDTO getPizzaDetails(long id);
+    public ItemDTO getPizzaDetails(Long id);
 
     public Item getPizzaDetailsItem(Long id);
 

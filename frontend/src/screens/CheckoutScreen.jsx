@@ -4,11 +4,44 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveShippingAddressThunk } from "../Redux/thunks/UserThunk";
 import { FiEdit, FiTrash } from "react-icons/fi";
+import { useRazorpay } from "react-razorpay";
+import { createOrderThunk } from "../Redux/thunks/OrderThunk";
+import { current } from "@reduxjs/toolkit";
 // import { saveShippingAddress } from "../Redux/slices/UserSlice";
 
 const CheckoutScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const currentOrderForRazorpay = useSelector((state) => state.orderReducer);
+  const user = useSelector((state) => state.userReducer);
+  const { error, isLoading, Razorpay } = useRazorpay();
+
+  const handlePayment = () => {
+    dispatch(createOrderThunk(cart.totalPrice));
+    const options = {
+      key: "rzp_test_mbABnIuJl5vwPf",
+      amount: currentOrderForRazorpay.currentOrder.amount,
+      currency: currentOrderForRazorpay.currentOrder.currency,
+      name: "PizzaHaven",
+      description: "Test Transaction",
+      order_id: currentOrderForRazorpay.id,
+      handler: (response) => {
+        navigate(`/confirmation/${currentOrderForRazorpay.currentOrder.id}`);
+      },
+      prefill: {
+        name: "John Doe",
+        email: "john.doe@example.com",
+        contact: "9999999999",
+      },
+      theme: {
+        color: "#F37254",
+      },
+    };
+
+    const razorpayInstance = new Razorpay(options);
+    razorpayInstance.open();
+  };
 
   // const savedAddresses = useSelector(
   //   (state) => state.userReducer.shippingAddressess || []
@@ -272,7 +305,10 @@ const CheckoutScreen = () => {
                 <span>₹{cart.totalPrice}</span>
               </div>
             </div>
-            <button className="w-full bg-red-500 text-white py-3 mt-4 rounded-md cursor-pointer">
+            <button
+              className="w-full bg-red-500 text-white py-3 mt-4 rounded-md cursor-pointer"
+              onClick={handlePayment}
+            >
               Proceed to pay
             </button>
           </div>

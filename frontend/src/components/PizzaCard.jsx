@@ -6,7 +6,7 @@ import { addToCartThunk } from "../Redux/thunks/CartThunk";
 const PizzaCard = ({ pizza }) => {
   const [selectedSize, setSelectedSize] = useState("SMALL");
   const [price, setPrice] = useState(
-    pizza.itemSizes.find((size) => size.size === selectedSize).price
+    pizza.itemSizes.find((size) => size.size === selectedSize)?.price
   );
 
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ const PizzaCard = ({ pizza }) => {
     <div className="max-w-sm bg-white shadow-lg rounded-2xl overflow-hidden">
       <img
         className="w-full h-52 object-cover cursor-pointer"
-        src={pizza?.image}
+        src={pizza?.imageUrl}
         alt={pizza?.name}
         onClick={handleCardClick}
       />

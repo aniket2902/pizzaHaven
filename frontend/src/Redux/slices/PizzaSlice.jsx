@@ -13,9 +13,9 @@ const pizzaSlice = createSlice({
     setPizzaDetails: (state, action) => {
       state.pizzasDetails = action.payload;
     },
-    // setAllPizzas: (state, action) => {
-    //     state.allPizzas = action.payload;
-    // },
+    setAllPizzas: (state, action) => {
+      state.allPizzas = action.payload;
+    },
     // setPizzasByOutlet: (state, action) => {
     //     const { outletId, pizzas } = action.payload;
     //     state.pizzasByOutlet[outletId] = pizzas;
