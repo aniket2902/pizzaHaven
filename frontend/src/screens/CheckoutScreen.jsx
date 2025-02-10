@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { use } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveShippingAddressThunk } from "../Redux/thunks/UserThunk";
 import { FiEdit, FiTrash } from "react-icons/fi";
 import { useRazorpay } from "react-razorpay";
-import { createOrderThunk } from "../Redux/thunks/OrderThunk";
+import {
+  createOrderThunk,
+  razorpayOrderThunk,
+} from "../Redux/thunks/OrderThunk";
 import { current } from "@reduxjs/toolkit";
+import { clearCartItems } from "../Redux/slices/CartSlice";
+import { toast } from "react-toastify";
+import { BASE_URL } from "../constants";
 // import { saveShippingAddress } from "../Redux/slices/UserSlice";
 
 const CheckoutScreen = () => {
@@ -18,7 +24,11 @@ const CheckoutScreen = () => {
   const { error, isLoading, Razorpay } = useRazorpay();
 
   const handlePayment = () => {
-    dispatch(createOrderThunk(cart.totalPrice));
+    if (!useSavedAddress) {
+      toast.error("Please select an address to proceed with payment");
+      return;
+    }
+    dispatch(razorpayOrderThunk(cart.totalPrice));
     const options = {
       key: "rzp_test_mbABnIuJl5vwPf",
       amount: currentOrderForRazorpay.currentOrder.amount,
@@ -26,8 +36,34 @@ const CheckoutScreen = () => {
       name: "PizzaHaven",
       description: "Test Transaction",
       order_id: currentOrderForRazorpay.id,
-      handler: (response) => {
-        navigate(`/confirmation/${currentOrderForRazorpay.currentOrder.id}`);
+      handler: async (response) => {
+        if (response.razorpay_payment_id) {
+          dispatch(createOrderThunk(address));
+          dispatch(clearCartItems());
+          navigate(`/confirmation/${currentOrderForRazorpay.id}`);
+        }
+        // const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
+        //   response;
+
+        // const verificationResponse = await fetch(`${BASE_URL}/payment/verify`, {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify({
+        //     razorpay_payment_id,
+        //     razorpay_order_id,
+        //     razorpay_signature,
+        //   }),
+        // });
+
+        // dispatch(createOrderThunk(address));
+        // if (verificationResponse.ok) {
+        //   dispatch(clearCartItems());
+        //   navigate(`/confirmation/${currentOrderForRazorpay.id}`);
+        // } else {
+        //   console.error("Payment verification failed");
+        // }
       },
       prefill: {
         name: "John Doe",
@@ -47,37 +83,24 @@ const CheckoutScreen = () => {
   //   (state) => state.userReducer.shippingAddressess || []
   // );
 
-  const savedAddresses = [
-    {
-      id: "1",
-      street: "address1",
-      city: "Bengaluru",
-      state: "Karnataka",
-      zip: "560001",
-      country: "India",
-    },
-    {
-      id: "2",
-      street: "address2",
-      city: "Bengaluru",
-      state: "Karnataka",
-      zip: "560001",
-      country: "India",
-    },
-    {
-      id: "3",
-      street: "address3",
-      city: "Bengaluru",
-      state: "Karnataka",
-      zip: "560001",
-      country: "India",
-    },
-  ];
-
-  const cart = useSelector((state) => state.cartReducer);
-
-  const [useSavedAddress, setUseSavedAddress] = useState(false);
-  const [newAddressClicked, setNewAddressClicked] = useState(false);
+  // const savedAddresses = [
+  //   {
+  //     id: "1",
+  //     street: "address1",
+  //     city: "Bengaluru",
+  //     state: "Karnataka",
+  //     zip: "560001",
+  //     country: "India",
+  //   },
+  //   {
+  //     id: "2",
+  //     street: "address2",
+  //     city: "Bengaluru",
+  //     state: "Karnataka",
+  //     zip: "560001",
+  //     country: "India",
+  //   },
+  // ];
 
   const [address, setAddress] = useState({
     street: "",
@@ -87,11 +110,20 @@ const CheckoutScreen = () => {
     country: "",
   });
 
+  const [savedAddresses, setSavedAddresses] = useState([]);
+
+  const cart = useSelector((state) => state.cartReducer);
+
+  const [useSavedAddress, setUseSavedAddress] = useState(false);
+  const [newAddressClicked, setNewAddressClicked] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleNewAddress();
-    dispatch(saveShippingAddressThunk(address));
-    navigate("/checkout");
+    const newAddress = { ...address };
+    setSavedAddresses((prev) => [...prev, newAddress]);
+    // dispatch(saveShippingAddres
+    // sThunk(address));
+    // navigate("/checkout");
   };
 
   const handleSelectedAddress = (selectedAddress) => {
@@ -102,7 +134,7 @@ const CheckoutScreen = () => {
 
   const handleNewAddress = () => {
     if (savedAddresses.length >= 3) {
-      alert(
+      toast.error(
         "You can save only 3 addresses. Please delete an existing address to add a new one."
       );
       return;
@@ -117,6 +149,15 @@ const CheckoutScreen = () => {
       country: "",
     });
   };
+
+  const deleteAddress = (zip) => {
+    const updatedAddresses = savedAddresses.filter(
+      (selectedAddress) => selectedAddress.zip !== zip
+    );
+    setSavedAddresses(updatedAddresses);
+  };
+
+  useEffect(() => {}, []);
 
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-6 pt-24">
@@ -148,6 +189,7 @@ const CheckoutScreen = () => {
                       size={20}
                     />
                     <FiTrash
+                      onClick={deleteAddress(selectedAddress.zip)}
                       className="text-red-500 cursor-pointer hover:text-red-700"
                       size={20}
                     />

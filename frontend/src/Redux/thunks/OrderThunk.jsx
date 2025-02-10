@@ -1,8 +1,9 @@
 import axios from "axios";
 import { BASE_URL } from "../../constants";
 import { createOrder } from "../slices/OrderSlice";
+import { toast } from "react-toastify";
 
-export function createOrderThunk(totalPrice) {
+export function razorpayOrderThunk(totalPrice) {
   return async (dispatch, getState) => {
     try {
       const response = await axios.get(`${BASE_URL}/payment/${totalPrice}`);
@@ -11,6 +12,33 @@ export function createOrderThunk(totalPrice) {
       }
     } catch (error) {
       dispatch(signInFailed(error.message));
+    }
+  };
+}
+
+export function createOrderThunk(address) {
+  return async (dispatch, getState) => {
+    try {
+      const token = localStorage.getItem("jwt");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      };
+      const response = await axios.post(
+        `${BASE_URL}/order/create`,
+        address,
+        config
+      );
+      console.log("Response from createOrderThunk:", response);
+      if (response) {
+        dispatch(createOrder(response.data));
+      }
+    } catch (error) {
+      // dispatch(signInFailed(error.message));
+      console.log("Error in creating order", error);
+      toast.error("Error in creating order", error);
     }
   };
 }

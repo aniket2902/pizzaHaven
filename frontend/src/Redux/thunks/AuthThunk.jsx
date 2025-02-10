@@ -8,6 +8,8 @@ import {
   loginFailure,
   logoutSuccess,
 } from "../slices/UserSlice";
+import { toast } from "react-toastify";
+import { clearCartItems } from "../slices/CartSlice";
 
 const API_URL = "http://localhost:8080/auth";
 
@@ -28,6 +30,7 @@ export const registerUserThunk = (reqData) => async (dispatch) => {
     }
 
     dispatch(registerSuccess({ jwt: data.jwt, user: data.name }));
+    toast.success("Registration successful");
   } catch (error) {
     console.log("Register error:", error);
     dispatch(registerFailed(error.response?.data?.message || error.message));
@@ -50,6 +53,7 @@ export const loginUserThunk = (reqData) => async (dispatch) => {
     }
 
     dispatch(loginSuccess({ jwt: data.jwt, user: data.name }));
+    toast.success("Login successful");
   } catch (error) {
     dispatch(
       loginFailure(
@@ -62,8 +66,10 @@ export const loginUserThunk = (reqData) => async (dispatch) => {
 };
 
 export const logoutUserThunk = (reqData) => async (dispatch) => {
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("name");
+  localStorage.removeItem("jwt");
+  localStorage.removeItem("name");
   dispatch(logoutSuccess());
+  dispatch(clearCartItems());
+  toast.error("Logout successful");
   reqData.navigate("/");
 };
