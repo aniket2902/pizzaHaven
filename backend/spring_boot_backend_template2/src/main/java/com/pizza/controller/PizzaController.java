@@ -24,7 +24,7 @@ public class PizzaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getPizzaDetails(long id){
+    public ResponseEntity<?> getPizzaDetails(@PathVariable Long id){
         try {
             return ResponseEntity.ok(pizzaService.getPizzaDetails(id));
         }

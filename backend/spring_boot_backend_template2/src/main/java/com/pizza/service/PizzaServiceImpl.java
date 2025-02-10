@@ -51,8 +51,8 @@ public class PizzaServiceImpl implements PizzaService {
 
     @Override
     @Transactional(readOnly = true)
-    public ItemDTO getPizzaDetails(long id) {
-        Item pizza = pizzaRepository.findById(id).orElseThrow(() -> new ApiException("pizza not found"));
+    public ItemDTO getPizzaDetails(Long id) {
+        Item pizza=pizzaRepository.findById(id).orElseThrow(()->new ApiException("pizza not found"));
 
         ItemDTO itemDTO = modelMapper.map(pizza, ItemDTO.class);
 
