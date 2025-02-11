@@ -10,11 +10,14 @@ import com.pizza.repository.CartRepository;
 import com.pizza.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -120,4 +123,19 @@ public class OrderService {
 
         return od;
     }
+
+    public String changeOrderStatus(Long orderId, String changedStatus) {
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+        if (optionalOrder.isEmpty()) {
+            return "Order not found";
+        }
+        Order order = optionalOrder.get();
+        ORDER_STATUS orderStatus=ORDER_STATUS.valueOf(changedStatus);
+        order.setStatus(orderStatus);
+        orderRepository.save(order);
+
+        return "Order Status changed successfully";
+    }
+
+
 }

@@ -40,7 +40,7 @@ const CheckoutScreen = () => {
         if (response.razorpay_payment_id) {
           dispatch(createOrderThunk(address));
           dispatch(clearCartItems());
-          navigate(`/confirmation/${currentOrderForRazorpay.id}`);
+          navigate(`/confirmation/${response.razorpay_payment_id}`);
         }
         // const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
         //   response;
@@ -83,24 +83,24 @@ const CheckoutScreen = () => {
   //   (state) => state.userReducer.shippingAddressess || []
   // );
 
-  // const savedAddresses = [
-  //   {
-  //     id: "1",
-  //     street: "address1",
-  //     city: "Bengaluru",
-  //     state: "Karnataka",
-  //     zip: "560001",
-  //     country: "India",
-  //   },
-  //   {
-  //     id: "2",
-  //     street: "address2",
-  //     city: "Bengaluru",
-  //     state: "Karnataka",
-  //     zip: "560001",
-  //     country: "India",
-  //   },
-  // ];
+  const savedAddresses = [
+    {
+      id: "1",
+      street: "address1",
+      city: "Bengaluru",
+      state: "Karnataka",
+      zip: "560001",
+      country: "India",
+    },
+    {
+      id: "2",
+      street: "address2",
+      city: "Bengaluru",
+      state: "Karnataka",
+      zip: "560001",
+      country: "India",
+    },
+  ];
 
   const [address, setAddress] = useState({
     street: "",
@@ -110,7 +110,7 @@ const CheckoutScreen = () => {
     country: "",
   });
 
-  const [savedAddresses, setSavedAddresses] = useState([]);
+  // const [savedAddresses, setSavedAddresses] = useState([]);
 
   const cart = useSelector((state) => state.cartReducer);
 
@@ -120,7 +120,8 @@ const CheckoutScreen = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newAddress = { ...address };
-    setSavedAddresses((prev) => [...prev, newAddress]);
+    // setSavedAddresses((prev) => [...prev, newAddress]);
+    console.log(savedAddresses);
     // dispatch(saveShippingAddres
     // sThunk(address));
     // navigate("/checkout");
@@ -154,7 +155,7 @@ const CheckoutScreen = () => {
     const updatedAddresses = savedAddresses.filter(
       (selectedAddress) => selectedAddress.zip !== zip
     );
-    setSavedAddresses(updatedAddresses);
+    // setSavedAddresses(updatedAddresses);
   };
 
   useEffect(() => {}, []);

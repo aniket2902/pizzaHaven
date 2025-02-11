@@ -1,14 +1,18 @@
 package com.pizza.controller;
 
 
+import com.pizza.domain.ORDER_STATUS;
 import com.pizza.pojos.*;
 import com.pizza.service.CartItemListService;
 import com.pizza.service.CartService;
 import com.pizza.service.OrderService;
 import com.pizza.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/order")
@@ -50,5 +54,25 @@ public class OrderController {
     public ResponseEntity<?> getOrders(@RequestHeader("Authorization") String jwt) {
         User user = userService.findUserProfileByJwt(jwt);
         return ResponseEntity.ok(orderService.byid(user.getId()));
+    }
+
+    @GetMapping("/changeStatus")
+    public ResponseEntity<?> changeOrderStatus(@RequestHeader("Authorization") String jwt,
+                                               @RequestParam Long orderId,
+                                               @RequestParam String changedStatus){
+
+        User user = userService.findUserProfileByJwt(jwt);
+//        if (user == null || (!user.getRole().equals("ADMIN") && !user.getRole().equals("OUTLET_MANAGER"))) {
+//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Unauthorized action");
+//        }
+
+        ORDER_STATUS orderStatus;
+        try {
+            orderStatus = ORDER_STATUS.valueOf(changedStatus.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Invalid order status: " + changedStatus);
+        }
+
+        return ResponseEntity.ok(orderService.changeOrderStatus(orderId,changedStatus));
     }
 }

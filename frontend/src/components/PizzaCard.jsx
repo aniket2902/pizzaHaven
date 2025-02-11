@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { addToCartThunk } from "../Redux/thunks/CartThunk";
 
 const PizzaCard = ({ pizza }) => {
-  const [selectedSize, setSelectedSize] = useState("SMALL");
+  const [selectedSize, setSelectedSize] = useState("MEDIUM");
   const [price, setPrice] = useState(
     pizza.itemSizes.find((size) => size.size === selectedSize)?.price
   );
@@ -31,7 +31,7 @@ const PizzaCard = ({ pizza }) => {
     <div className="max-w-sm bg-white shadow-lg rounded-2xl overflow-hidden">
       <img
         className="w-full h-52 object-cover cursor-pointer"
-        src={pizza?.imageUrl}
+        src={`data:image/png;base64,${pizza.imageUrl}`}
         alt={pizza?.name}
         onClick={handleCardClick}
       />
@@ -44,7 +44,7 @@ const PizzaCard = ({ pizza }) => {
             value={selectedSize}
             onChange={handleSizeChange}
           >
-            {pizza.itemSizes.map((size) => (
+            {pizza?.itemSizes.map((size) => (
               <option key={size.size} value={size.size}>
                 {size.size}
               </option>
