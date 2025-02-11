@@ -7,11 +7,14 @@ import {
   loginSuccess,
   loginFailure,
   logoutSuccess,
+  getUserRequest,
+  getUserSuccess,
 } from "../slices/UserSlice";
 import { toast } from "react-toastify";
 import { clearCartItems } from "../slices/CartSlice";
 
 const API_URL = "http://localhost:8080/auth";
+const API_URL_2 = "http://localhost:8080/api";
 
 export const registerUserThunk = (reqData) => async (dispatch) => {
   console.log("Register request data:", reqData.userData);
@@ -72,4 +75,20 @@ export const logoutUserThunk = (reqData) => async (dispatch) => {
   dispatch(clearCartItems());
   toast.error("Logout successful");
   reqData.navigate("/");
+};
+
+export const getUserThunk = () => async (dispatch) => {
+  console.log("Iside GetUserThunk");
+
+  dispatch(getUserRequest());
+  const token = localStorage.getItem("jwt");
+  const userData = await axios.get(`${API_URL_2}/user/`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  console.log("userThunk", userData.data);
+  localStorage.setItem("userData", JSON.stringify(userData.data));
+
+  dispatch(getUserSuccess(userData.data));
 };

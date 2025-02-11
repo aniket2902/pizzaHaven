@@ -1,10 +1,26 @@
-import React from "react";
-import { FaDollarSign, FaPizzaSlice, FaClipboardList } from "react-icons/fa";
+import React, { useEffect } from "react";
+import {
+  FaDollarSign,
+  FaPizzaSlice,
+  FaClipboardList,
+  FaRupeeSign,
+} from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllOrdersThunk } from "../../Redux/thunks/OrderThunk";
 
 const OutletDashboard = () => {
-  const totalSales = 52340;
-  const totalOrders = 128;
-  const totalItemsSold = 342;
+  const totalSales = 5000;
+  const totalItemsSold = 20;
+
+  const allOrders = useSelector((state) => state.orderReducer.allOrders);
+
+  const dispatch = useDispatch();
+
+  // const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    dispatch(getAllOrdersThunk());
+  }, [dispatch]);
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen mt-8">
@@ -13,10 +29,11 @@ const OutletDashboard = () => {
       {/* Dashboard Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="p-6 flex items-center bg-white shadow-lg rounded-2xl">
-          <FaDollarSign className="text-green-500 text-3xl mr-4" />
+          {/* <FaDollarSign className="text-green-500 text-3xl mr-4" /> */}
+          <FaRupeeSign className="text-green-500 text-3xl mr-4" />
           <div>
             <p className="text-gray-600">Total Sales</p>
-            <h2 className="text-xl font-semibold">${totalSales}</h2>
+            <h2 className="text-xl font-semibold">{totalSales}</h2>
           </div>
         </div>
 
@@ -24,7 +41,7 @@ const OutletDashboard = () => {
           <FaClipboardList className="text-blue-500 text-3xl mr-4" />
           <div>
             <p className="text-gray-600">Total Orders</p>
-            <h2 className="text-xl font-semibold">{totalOrders}</h2>
+            <h2 className="text-xl font-semibold">{allOrders?.length}</h2>
           </div>
         </div>
 

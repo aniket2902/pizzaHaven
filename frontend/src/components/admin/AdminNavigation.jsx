@@ -16,12 +16,12 @@ const menuItems = [
     icon: <FaShoppingBag />,
     path: "/admin/outlets/dashboard",
   },
-  {
-    title: "Address",
-    icon: <FaMapMarkerAlt />,
-    path: "/admin/outlets/address",
-  },
-  { title: "User", icon: <FaUser />, path: "/profile/user" },
+  // {
+  //   title: "Address",
+  //   icon: <FaMapMarkerAlt />,
+  //   path: "/admin/outlets/address",
+  // },
+  // { title: "User", icon: <FaUser />, path: "/profile/user" },
   {
     title: "Orders",
     icon: <FaShoppingBag />,

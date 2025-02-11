@@ -28,14 +28,15 @@ const CheckoutScreen = () => {
       toast.error("Please select an address to proceed with payment");
       return;
     }
-    dispatch(razorpayOrderThunk(cart.totalPrice));
+    // dispatch(razorpayOrderThunk(cart.totalPrice));
+    console.log(currentOrderForRazorpay, " current order");
     const options = {
       key: "rzp_test_mbABnIuJl5vwPf",
-      amount: currentOrderForRazorpay.currentOrder.amount,
-      currency: currentOrderForRazorpay.currentOrder.currency,
+      amount: currentOrderForRazorpay?.currentOrder.amount,
+      currency: currentOrderForRazorpay?.currentOrder.currency,
       name: "PizzaHaven",
       description: "Test Transaction",
-      order_id: currentOrderForRazorpay.id,
+      order_id: currentOrderForRazorpay?.id,
       handler: async (response) => {
         if (response.razorpay_payment_id) {
           dispatch(createOrderThunk(address));
@@ -158,7 +159,10 @@ const CheckoutScreen = () => {
     // setSavedAddresses(updatedAddresses);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log("cart ", cart);
+    dispatch(razorpayOrderThunk(cart.totalPrice));
+  }, [cart]);
 
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-6 pt-24">

@@ -96,15 +96,14 @@ public class AuthController {
 
 		User savedUser = userRepository.save(createdUser);
 		System.out.println(new UserRequestDTO(emailId,subject,text) + "Email CALL");
-		//emailUserDTO=emailClient.createUser(new UserRequestDTO(email,subject,text));
+
 //		try {
-//			
-//			
-//			//emailClient.getUser();
+//			emailUserDTO=emailClient.createUser(new UserRequestDTO(email,subject,text));
+//
 //		}
 //		catch(FeignException.Conflict ce) {
 //			   System.out.println("Email not sent");
-//	           
+//
 //		}
 		
 		
