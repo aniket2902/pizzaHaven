@@ -12,10 +12,10 @@ spring:
     gateway:
       globalcors:
         corsConfigurations:
-          '[/**]':
+          "[/**]":
             allowedOrigins:
-             - 'http://localhost:5173'
-#              - 'https://urbanclamp.xyz'
+              - "http://localhost:5173"
+            #              - 'https://urbanclamp.xyz'
             allowedMethods:
               - GET
               - POST
@@ -50,7 +50,7 @@ spring:
         - id: backend
           uri: lb://backend
           predicates:
-            - Path= /auth/**, /api/pizzas/**, /api/payment/**, /api/cart/**, /api/order/**
+            - Path= /auth/**, /api/pizzas/**, /api/payment/**, /api/cart/**, /api/order/**, /api/user/**
 
 #        - id: notification-service
 #          uri: lb://notification-service

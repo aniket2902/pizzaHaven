@@ -3,6 +3,7 @@ package com.pizza.service;
 import com.pizza.domain.ORDER_STATUS;
 import com.pizza.dto.OrderDTO;
 import com.pizza.dto.OrderItemDTO;
+import com.pizza.dto.OrderStatus;
 import com.pizza.pojos.*;
 import com.pizza.repository.AddressRepository;
 import com.pizza.repository.OrderRepository;
@@ -122,6 +123,48 @@ public class OrderService {
         }
 
         return od;
+    }
+
+    @Transactional
+    public List<OrderDTO> findAll() {
+        List<Order> orders = orderRepository.findAll();
+        List<OrderDTO> od = new ArrayList<OrderDTO>();
+        int i;
+        for (Order o : orders) {
+
+            OrderDTO internalOd = new OrderDTO();
+
+            i = o.getOrderItemList().size();
+            internalOd.setId(o.getId());
+            internalOd.setTotalPrice(o.getTotalPrice());
+            internalOd.setStatus(o.getStatus().toString());
+
+            List<OrderItemDTO> oid = new ArrayList<>();
+
+            for (OrderItem internalODI : o.getOrderItemList()) {
+
+                OrderItemDTO internaloid = new OrderItemDTO();
+
+                internaloid.setId(internalODI.getId());
+                internaloid.setPrice(internalODI.getPrice());
+                internaloid.setQuantity(internalODI.getQuantity());
+                internaloid.setItemSize(internalODI.getSelectedItem().getSize().toString());
+
+                oid.add(internaloid);
+
+            }
+            internalOd.setOrderItemList(oid);
+
+            od.add(internalOd);
+        }
+
+        return od;
+    }
+
+    public void updateStatus(OrderStatus orderStatus) {
+        Order order = orderRepository.findById(orderStatus.getId()).orElseThrow(() -> new RuntimeException("Something's wrong"));
+        order.setStatus(orderStatus.getStatus());
+        orderRepository.save(order);
     }
 
     public String changeOrderStatus(Long orderId, String changedStatus) {

@@ -41,14 +41,14 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private USER_ROLE role;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    @JsonIgnore
-    @ToString.Exclude
-    private Address address;
+//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+//    @JsonIgnore
+//    @ToString.Exclude
+//    private Address address;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    @ToString.Exclude
-    private Cart cart;
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    @ToString.Exclude
+//    private Cart cart;
 
 }

@@ -47,9 +47,7 @@ const Navbar = () => {
           <Link to="/about" className="hover:underline">
             about us
           </Link>
-          <Link to="/menu" className="hover:underline">
-            order
-          </Link>
+          
         </div>
 
         <div className="flex items-center space-x-4">

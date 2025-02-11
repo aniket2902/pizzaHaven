@@ -26,7 +26,7 @@ public class SecurityConfiguration {
 
         http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(Authorize -> Authorize
-                        .requestMatchers("/api/pizzas/**","/api/user/**","/api/address/**").permitAll()
+                        .requestMatchers("/api/pizzas/**","/api/user/**","/api/address/**","/orders/**").permitAll()
                         .requestMatchers("/api/payment/**").permitAll()
                         .requestMatchers("/api/cart/**").permitAll()
                         .requestMatchers("/api/order/**").permitAll()

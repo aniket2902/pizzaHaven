@@ -33,7 +33,7 @@ const UserProfileScreen = () => {
   const handleSaveChanges = (values) => {
     const token = localStorage.getItem("jwt");
     axios
-      .put("http://localhost:5000/user", values, {
+      .put("http://localhost:8080/api/user/updateUser", values, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
