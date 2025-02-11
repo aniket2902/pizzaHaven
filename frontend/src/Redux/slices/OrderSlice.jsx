@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  currentOrder: [],
+  currentOrder: null,
+  allOrders: [],
   status: "idle",
   error: null,
 };
@@ -25,10 +26,13 @@ const orderSlice = createSlice({
         existingOrder.status = status;
       }
     },
+    getAllOrders: (state, action) => {
+      state.allOrders = action.payload;
+    },
   },
 });
 
-export const { createOrder, removeOrder, updateOrderStatus } =
+export const { createOrder, removeOrder, updateOrderStatus, getAllOrders } =
   orderSlice.actions;
 
 export default orderSlice.reducer;

@@ -1,7 +1,7 @@
 package com.pizza.controller;
 
 
-import com.pizza.dto.OrderStatus;
+import com.pizza.domain.ORDER_STATUS;
 import com.pizza.pojos.*;
 import com.pizza.service.CartItemListService;
 import com.pizza.service.CartService;
@@ -12,8 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("api/order")
 @AllArgsConstructor
 public class OrderController {
 
@@ -54,21 +56,23 @@ public class OrderController {
         return ResponseEntity.ok(orderService.byid(user.getId()));
     }
 
-    //for Admin
-    @GetMapping("/getAllOrders")
-    public ResponseEntity<?> getAllOrders() {
-        return ResponseEntity.status(HttpStatus.OK).body(orderService.findAll());
-    }
+    @GetMapping("/changeStatus")
+    public ResponseEntity<?> changeOrderStatus(@RequestHeader("Authorization") String jwt,
+                                               @RequestParam Long orderId,
+                                               @RequestParam String changedStatus){
 
-    @PostMapping("/changeStatus")
-    public ResponseEntity<?> changStatus(@RequestBody OrderStatus orderStatus){
+        User user = userService.findUserProfileByJwt(jwt);
+//        if (user == null || (!user.getRole().equals("ADMIN") && !user.getRole().equals("OUTLET_MANAGER"))) {
+//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Unauthorized action");
+//        }
+
+        ORDER_STATUS orderStatus;
         try {
-            orderService.updateStatus(orderStatus);
-            return ResponseEntity.status(HttpStatus.OK).body("Status Updated");
-        }
-        catch(RuntimeException e ){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unable to update address");
+            orderStatus = ORDER_STATUS.valueOf(changedStatus.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Invalid order status: " + changedStatus);
         }
 
+        return ResponseEntity.ok(orderService.changeOrderStatus(orderId,changedStatus));
     }
 }

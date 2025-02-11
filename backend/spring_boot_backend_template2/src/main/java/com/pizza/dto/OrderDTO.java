@@ -1,6 +1,7 @@
 package com.pizza.dto;
 
 import com.pizza.domain.ORDER_STATUS;
+import com.pizza.pojos.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

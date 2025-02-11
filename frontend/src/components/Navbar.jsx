@@ -8,7 +8,7 @@ import {
   FaUserCircle,
 } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
-import { logoutUserThunk } from "../Redux/thunks/AuthThunk";
+import { logoutUserThunk, getUserThunk } from "../Redux/thunks/AuthThunk";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,6 +33,12 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(logoutUserThunk({ navigate }));
   };
+
+  const handleGetUserData = () => {
+    setDropdownOpen(!dropdownOpen);
+    dispatch(getUserThunk());
+  };
+
   return (
     <nav className="bg-white shadow-md fixed w-full top-0 z-50">
       <div className="container mx-auto px-6 py-3 flex justify-between items-center">
@@ -42,12 +48,11 @@ const Navbar = () => {
 
         <div className="hidden md:flex space-x-8 text-gray-600 font-medium">
           <Link to="/menu" className="hover:underline">
-            menu
+            Menu
           </Link>
           <Link to="/about" className="hover:underline">
-            about us
+            About Us
           </Link>
-          
         </div>
 
         <div className="flex items-center space-x-4">
@@ -81,7 +86,7 @@ const Navbar = () => {
           {userData ? (
             <div className="relative">
               <button
-                onClick={() => setDropdownOpen(!dropdownOpen)}
+                onClick={() => handleGetUserData()}
                 className="flex items-center space-x-2 border border-gray-300 px-4 py-1 rounded-full font-medium hover:bg-gray-100 transition"
               >
                 <FaUserCircle size={20} className="text-gray-600" />

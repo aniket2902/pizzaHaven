@@ -23,3 +23,15 @@ export function getPizzaByIdThunk(id) {
     }
   };
 }
+export function deletePizzaThunk(id) {
+  return async (dispatch, getState) => {
+    try {
+      console.log("hello");
+      const response = await axios.delete(`${BASE_URL}/pizzas/${id}`);
+      // dispatch(setPizzaDetails(response.data));
+      if (response) dispatch(getAllPizzasThunk());
+    } catch (error) {
+      dispatch(signInFailed(error.message));
+    }
+  };
+}

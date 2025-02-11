@@ -22,6 +22,7 @@ public class Item extends BaseEntity{
 
     private String description;
 
+    @Column(columnDefinition = "LONGTEXT")
     private String imageUrl;
 
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

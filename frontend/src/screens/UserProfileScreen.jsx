@@ -5,7 +5,16 @@ import axios from "axios";
 import * as Yup from "yup";
 
 const UserProfileScreen = () => {
-  const [user, setUser] = useState({ name: "", email: "", phoneNumber: "" ,password:""});
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+  });
+  let userData = JSON.parse(localStorage.getItem("userData"));
+  console.log(userData, "From UserProfile");
+  user.name = userData.name;
+  user.email = userData.email;
+  user.phoneNumber = userData.phoneNumber;
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
@@ -31,6 +40,14 @@ const UserProfileScreen = () => {
   });
 
   const handleSaveChanges = (values) => {
+    console.log("Handebshbfhsvh", values);
+    userData.name = values.name;
+    userData.email = values.email;
+    userData.phoneNumber = values.phoneNumber;
+    console.log("HandleSaveChanges", userData);
+
+    localStorage.removeItem("userData");
+    localStorage.setItem("userData", JSON.stringify(userData));
     const token = localStorage.getItem("jwt");
     axios
       .put("http://localhost:8080/api/user/updateUser", values, {
@@ -39,7 +56,9 @@ const UserProfileScreen = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(() => alert("User details updated successfully"))
+      .then(() => {
+        alert("User details updated successfully");
+      })
       .catch((error) => console.error("Error updating user details:", error));
   };
   return (

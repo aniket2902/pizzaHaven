@@ -30,6 +30,7 @@ export function addToCartThunk(pizza) {
         toast.success("Item added to cart");
       }
     } catch (error) {
+      toast.error(error.message);
       console.log(error);
     }
   };
