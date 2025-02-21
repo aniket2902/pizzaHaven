@@ -1,0 +1,50 @@
+name: Deploy Main-backend-service to EC2 with Docker
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build JAR File
+        run: |
+          cd backend/spring_boot_backend_template2
+          chmod +x ./mvnw
+          ./mvnw clean package -DskipTests
+
+      - name: Build Docker Image
+        run: |
+          cd backend/spring_boot_backend_template2
+          docker build -t main-backend-service .
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC21_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.EC21_PUBLIC_IP }} >> ~/.ssh/known_hosts
+
+      - name: Push Docker Image to EC2
+        run: |
+          docker save main-backend-service | bzip2 | ssh ubuntu@${{ secrets.EC21_PUBLIC_IP }} 'bunzip2 | docker load'
+
+      - name: Run Docker Container on EC2
+        run: |
+          ssh ubuntu@${{ secrets.EC21_PUBLIC_IP }} << EOF
+            docker stop main-backend-service || true
+            docker rm main-backend-service || true
+            docker run -d -p 8081:8081 \
+              --name main-backend-service \
+              -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
+              main-backend-service
+          EOF
