@@ -66,7 +66,7 @@ const AddMenuForm = () => {
     };
 
     axios
-      .post("http://localhost:8080/api/pizzas", requestData, {
+      .post("http://16.171.188.180:8080/api/pizzas", requestData, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
