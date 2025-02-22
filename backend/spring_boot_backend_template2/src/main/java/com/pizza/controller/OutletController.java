@@ -17,7 +17,7 @@ import com.pizza.response.ApiResponse;
 
 @RestController
 @RequestMapping("/outlet")
-@CrossOrigin(origins = "http://localhost:5173") // Allow React Frontend
+//@CrossOrigin(origins = "http://localhost:5173") // Allow React Frontend
 public class OutletController {
 
     private final OutletRepository outletRepository;

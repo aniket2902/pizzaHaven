@@ -50,7 +50,7 @@ spring:
         - id: backend
           uri: http://13.49.132.61:8081
           predicates:
-            - Path= /auth/**, /api/pizzas/**, /api/payment/**, /api/cart/**, /api/order/**, /api/user/**, /orders/**
+            - Path= /auth/**, /api/pizzas/**, /api/payment/**, /api/cart/**, /api/order/**, /api/user/**, /orders/** ,/outlet/**
 
 #        - id: notification-service
 #          uri: lb://notification-service
