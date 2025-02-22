@@ -13,8 +13,8 @@ import {
 import { toast } from "react-toastify";
 import { clearCartItems } from "../slices/CartSlice";
 
-const API_URL = "http://16.171.188.180:8080/auth";
-const API_URL_2 = "http://16.171.188.180:8080/api";
+const API_URL = "https://pizzahaven.store/gateway/auth";
+const API_URL_2 = "https://pizzahaven.store/gateway/api";
 
 export const registerUserThunk = (reqData) => async (dispatch) => {
   console.log("Register request data:", reqData.userData);

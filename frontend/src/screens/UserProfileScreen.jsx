@@ -50,7 +50,7 @@ const UserProfileScreen = () => {
     localStorage.setItem("userData", JSON.stringify(userData));
     const token = localStorage.getItem("jwt");
     axios
-      .put("http://16.171.188.180:8080/api/user/updateUser", values, {
+      .put("https://pizzahaven.store/gateway/api/user/updateUser", values, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,

@@ -53,7 +53,7 @@ export const updateUserThunk = (reqData) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `http://16.171.188.180:8080/users/update`, // Adjust endpoint as per backend
+      `https://pizzahaven.store/gateway/users/update`, // Adjust endpoint as per backend
       reqData.userData,
       config
     );
