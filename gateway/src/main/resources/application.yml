@@ -14,8 +14,8 @@ spring:
         corsConfigurations:
           "[/**]":
             allowedOrigins:
-              - "http://localhost:8000"
-            #              
+              - "http://16.171.188.180:8000"
+            #
             allowedMethods:
               - GET
               - POST
@@ -27,7 +27,7 @@ spring:
 
       routes:
         - id: email-service
-          uri: lb://email-service
+          uri: http://16.171.188.180:8082
           predicates:
             - Path=/api/emails/**
 
@@ -48,7 +48,7 @@ spring:
         #          predicates:
         #            - Path=/api/partners/**, /api/categories/**, /api/services/**, /api/availabilities/**, /partner-service/metrics
         - id: backend
-          uri: lb://backend
+          uri: http://13.49.132.61:8081
           predicates:
             - Path= /auth/**, /api/pizzas/**, /api/payment/**, /api/cart/**, /api/order/**, /api/user/**, /orders/**
 
