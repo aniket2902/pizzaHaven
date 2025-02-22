@@ -14,8 +14,8 @@ spring:
         corsConfigurations:
           "[/**]":
             allowedOrigins:
-              - "http://localhost:5173"
-            #              - 'https://urbanclamp.xyz'
+              - "http://localhost:8000"
+            #              
             allowedMethods:
               - GET
               - POST
@@ -60,7 +60,7 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://13.49.132.61:8761/eureka/
 
 logging:
   level:

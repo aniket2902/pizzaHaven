@@ -1,17 +1,14 @@
-FROM maven:3.9.9-amazoncorretto-21-alpine AS build
+# Use OpenJDK 17 as the base image
+FROM openjdk:17-jdk-slim
 
+# Set working directory inside the container
 WORKDIR /app
 
-COPY . .
+# Copy the built JAR file into the container
+COPY target/*.jar app.jar
 
-RUN mvn clean package -DskipTests
+# Expose the application's port
+EXPOSE 8081
 
-FROM amazoncorretto:21-alpine
-
-WORKDIR /app
-
-COPY --from=build /app/target/*.jar app.jar
-
-EXPOSE 8080
-
+# Command to run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
