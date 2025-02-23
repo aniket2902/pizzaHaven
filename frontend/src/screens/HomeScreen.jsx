@@ -5,11 +5,11 @@ import OutletFinder from "../components/OutletFinder";
 
 const HomeScreen = () => {
   return (
-    <>
+    <div className="max-w-full overflow-x-hidden">
       <OutletFinder />
       <Carousel />
       <PizzaCardContainer />
-    </>
+    </div>
   );
 };
 
