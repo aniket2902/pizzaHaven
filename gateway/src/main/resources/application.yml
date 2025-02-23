@@ -14,7 +14,7 @@ spring:
         corsConfigurations:
           "[/**]":
             allowedOrigins:
-              - "http://16.171.188.180:8000"
+              - "https://pizzahaven.store"
 
             allowedMethods:
               - GET
